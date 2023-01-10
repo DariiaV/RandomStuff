@@ -92,7 +92,13 @@ class ViewController: UIViewController {
             newPicture.addGestureRecognizer(pan)
             pan.delegate = self
         } else if gallery.isEmpty {
-            return // show alert - you delete all picture 🤷‍♀️
+            let alert = UIAlertController(title: "You delete all picture 🤷‍♀️",
+                                          message: nil,
+                                          preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            alert.addAction(okAction)
+            present(alert, animated: true)
+            return
         } else {
             nextIndex = 0
             showNextPicture()
