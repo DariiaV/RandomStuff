@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "corgi_header_image.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
