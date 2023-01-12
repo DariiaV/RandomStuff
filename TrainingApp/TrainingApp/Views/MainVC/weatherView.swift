@@ -9,20 +9,20 @@ import UIKit
 
 class WeatherView: UIView {
     
-    private let weatherLabel: UILabel = {
+    private let weatherStatusLabel: UILabel = {
         let label = UILabel()
         label.text = "Sunny"
-        label.font = .robotoMedium24()
+        label.font = .robotoMedium18()
         label.textColor = .specialGray
         label.textAlignment = .left
         return label
     }()
     
-    private let invitationLabel: UILabel = {
+    private let weatherDescriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Nice weather to work out outside"
         label.font = .robotoMedium14()
-        label.textColor = .specialLightBrown
+        label.textColor = .specialGray
         label.textAlignment = .left
         label.numberOfLines = 2
         return label
@@ -40,7 +40,7 @@ class WeatherView: UIView {
         
         setupViews()
         backgroundColor = .white
-        layer.cornerRadius = 20
+        layer.cornerRadius = 10
         addShadowOnView()
     }
     
@@ -49,23 +49,23 @@ class WeatherView: UIView {
     }
     
     private func setupViews() {
-        addSubviews(weatherLabel, invitationLabel, weatherImageView)
+        addSubviews(weatherStatusLabel, weatherDescriptionLabel, weatherImageView)
         
         NSLayoutConstraint.activate([
-            weatherImageView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            weatherImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-            weatherImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-            weatherImageView.heightAnchor.constraint(equalToConstant: 70),
-            weatherImageView.widthAnchor.constraint(equalToConstant: 70),
+            weatherImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            weatherImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            weatherImageView.heightAnchor.constraint(equalToConstant: 60),
+            weatherImageView.widthAnchor.constraint(equalToConstant: 60),
             
-            weatherLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            weatherLabel.trailingAnchor.constraint(equalTo: weatherImageView.leadingAnchor, constant: -5),
-            weatherLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            weatherStatusLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            weatherStatusLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            weatherStatusLabel.trailingAnchor.constraint(equalTo: weatherImageView.leadingAnchor, constant: 10),
+            weatherStatusLabel.heightAnchor.constraint(equalToConstant: 20),
             
-            invitationLabel.topAnchor.constraint(equalTo: weatherLabel.bottomAnchor, constant: 10),
-            invitationLabel.trailingAnchor.constraint(equalTo: weatherImageView.leadingAnchor,constant: -5),
-            invitationLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
-        
+            weatherDescriptionLabel.topAnchor.constraint(equalTo: weatherStatusLabel.bottomAnchor, constant: 0),
+            weatherDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            weatherDescriptionLabel.trailingAnchor.constraint(equalTo: weatherImageView.leadingAnchor, constant: -10),
+            weatherDescriptionLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
         ])
     }
     

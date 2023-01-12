@@ -63,8 +63,17 @@ class MainViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.bounces = false
-        
+        //tableView.isHidden = true
         return tableView
+    }()
+    
+    private let noWorkoutImageView: UIImageView = {
+       let imageView = UIImageView()
+        imageView.image = UIImage(named: "noWorkout")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isHidden = true
+        return imageView
     }()
     
     private let weatherView = WeatherView()
@@ -101,12 +110,14 @@ class MainViewController: UIViewController {
                          addWorkoutButton,
                          workoutTodayLabel,
                          tableView,
-                         weatherView)
+                         weatherView,
+                         noWorkoutImageView)
         
     }
     
     @objc private func addWorkoutButtonTapped() {
-        
+        let newWorkoutVC = NewWorkoutViewController()
+        present(newWorkoutVC, animated: true)
     }
     
     
@@ -170,7 +181,13 @@ extension MainViewController {
             weatherView.topAnchor.constraint(equalTo: addWorkoutButton.topAnchor),
             weatherView.bottomAnchor.constraint(equalTo: addWorkoutButton.bottomAnchor),
             weatherView.leadingAnchor.constraint(equalTo: addWorkoutButton.trailingAnchor, constant: 10),
-            weatherView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
+            weatherView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            
+            noWorkoutImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            noWorkoutImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            noWorkoutImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
+            noWorkoutImageView.topAnchor.constraint(equalTo: workoutTodayLabel.bottomAnchor, constant: 0)
+         
         ])
     }
 }

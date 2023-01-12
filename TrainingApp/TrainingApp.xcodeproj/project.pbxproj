@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		D80913B2296EEEAC00359B52 /* WorkoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80913B1296EEEAC00359B52 /* WorkoutTableViewCell.swift */; };
 		D80913B4296EF49F00359B52 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80913B3296EF49F00359B52 /* WeatherView.swift */; };
+		D878618429706B65004F112E /* NewWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D878618329706B65004F112E /* NewWorkoutViewController.swift */; };
+		D878618729707154004F112E /* DateAndRepeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D878618629707154004F112E /* DateAndRepeatView.swift */; };
+		D878618929707172004F112E /* RepsOrTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D878618829707172004F112E /* RepsOrTimerView.swift */; };
 		D8C37758296E925800408CFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C37757296E925800408CFB /* AppDelegate.swift */; };
 		D8C3775A296E925800408CFB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C37759296E925800408CFB /* SceneDelegate.swift */; };
 		D8C3775C296E925800408CFB /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3775B296E925800408CFB /* MainViewController.swift */; };
@@ -27,6 +30,9 @@
 /* Begin PBXFileReference section */
 		D80913B1296EEEAC00359B52 /* WorkoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewCell.swift; sourceTree = "<group>"; };
 		D80913B3296EF49F00359B52 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		D878618329706B65004F112E /* NewWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutViewController.swift; sourceTree = "<group>"; };
+		D878618629707154004F112E /* DateAndRepeatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndRepeatView.swift; sourceTree = "<group>"; };
+		D878618829707172004F112E /* RepsOrTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepsOrTimerView.swift; sourceTree = "<group>"; };
 		D8C37754296E925800408CFB /* TrainingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrainingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C37757296E925800408CFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8C37759296E925800408CFB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +61,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D878618529707139004F112E /* NewWorkoutVC */ = {
+			isa = PBXGroup;
+			children = (
+				D878618629707154004F112E /* DateAndRepeatView.swift */,
+				D878618829707172004F112E /* RepsOrTimerView.swift */,
+			);
+			path = NewWorkoutVC;
+			sourceTree = "<group>";
+		};
 		D8C3774B296E925800408CFB = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				D8C3775B296E925800408CFB /* MainViewController.swift */,
+				D878618329706B65004F112E /* NewWorkoutViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -122,6 +138,7 @@
 		D8C3776F296E97DD00408CFB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D878618529707139004F112E /* NewWorkoutVC */,
 				D8C3777F296EAF5A00408CFB /* MainVC */,
 			);
 			path = Views;
@@ -251,10 +268,13 @@
 				D8C37781296EAF7900408CFB /* CalendarView.swift in Sources */,
 				D8C37779296E9B1800408CFB /* UIStackView + Extensions.swift in Sources */,
 				D8C3775C296E925800408CFB /* MainViewController.swift in Sources */,
+				D878618729707154004F112E /* DateAndRepeatView.swift in Sources */,
 				D80913B2296EEEAC00359B52 /* WorkoutTableViewCell.swift in Sources */,
 				D8C37777296E9AFB00408CFB /* UIColor + Extensions.swift in Sources */,
 				D8C377A3296ED2B200408CFB /* CalendarCollectionViewCell.swift in Sources */,
+				D878618929707172004F112E /* RepsOrTimerView.swift in Sources */,
 				D8C37758296E925800408CFB /* AppDelegate.swift in Sources */,
+				D878618429706B65004F112E /* NewWorkoutViewController.swift in Sources */,
 				D8C3775A296E925800408CFB /* SceneDelegate.swift in Sources */,
 				D80913B4296EF49F00359B52 /* WeatherView.swift in Sources */,
 			);
