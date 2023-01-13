@@ -30,7 +30,7 @@ class WeatherView: UIView {
     
     private let weatherImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "Group 114")
+        image.image = UIImage(named: "Sun")
         image.contentMode = .scaleAspectFit
         return image
     }()
@@ -68,5 +68,4 @@ class WeatherView: UIView {
             weatherDescriptionLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
         ])
     }
-    
 }

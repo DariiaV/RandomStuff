@@ -41,6 +41,27 @@ class CalendarView: UIView {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
+    
+    private func weekArray() -> [[String]] {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_GB")
+        dateFormatter.dateFormat = "EEEEEE"
+        
+        var weekArray : [[String]] = [[],[]]
+        let calendar = Calendar.current
+        let today = Date()
+        
+        for i in -6...0 {
+            let date = calendar.date(byAdding: .weekday, value: i, to: today)
+            guard let date = date else { return weekArray }
+            let components = calendar.dateComponents([.day], from: date)
+            weekArray[1].append(String(components.day ?? 0))
+            let weekDay = dateFormatter.string(from: date)
+            weekArray[0].append(String(weekDay))
+        }
+        return weekArray
+    }
 }
 extension CalendarView: UICollectionViewDataSource {
     
@@ -53,10 +74,14 @@ extension CalendarView: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: idCalendarView, for: indexPath) as? CalendarCollectionViewCell else {
             return UICollectionViewCell()
         }
+        cell.cellConfigure(weekArray: weekArray(), indexPath: indexPath)
+        
+        if indexPath.item == 6 {
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .right)
+        }
         
         return cell
     }
-    
 }
 
 extension CalendarView: UICollectionViewDelegate {
@@ -89,8 +114,6 @@ extension CalendarView {
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 105),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
-            
-            
         ])
     }
 }

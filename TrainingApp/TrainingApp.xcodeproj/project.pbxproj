@@ -12,6 +12,14 @@
 		D878618429706B65004F112E /* NewWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D878618329706B65004F112E /* NewWorkoutViewController.swift */; };
 		D878618729707154004F112E /* DateAndRepeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D878618629707154004F112E /* DateAndRepeatView.swift */; };
 		D878618929707172004F112E /* RepsOrTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D878618829707172004F112E /* RepsOrTimerView.swift */; };
+		D87CCFE22971339C000D5F1D /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CCFE12971339C000D5F1D /* MainTabBarController.swift */; };
+		D87CCFE42971352F000D5F1D /* StatisticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CCFE32971352F000D5F1D /* StatisticViewController.swift */; };
+		D87CCFE62971357B000D5F1D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CCFE52971357B000D5F1D /* ProfileViewController.swift */; };
+		D87CCFE929714D5C000D5F1D /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = D87CCFE829714D5C000D5F1D /* Realm */; };
+		D87CCFEB29714D5C000D5F1D /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D87CCFEA29714D5C000D5F1D /* RealmSwift */; };
+		D87CCFED29714E3C000D5F1D /* WorkoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CCFEC29714E3C000D5F1D /* WorkoutModel.swift */; };
+		D87CCFF0297155CC000D5F1D /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CCFEF297155CC000D5F1D /* StorageManager.swift */; };
+		D87CCFF329718610000D5F1D /* SimpleAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CCFF229718610000D5F1D /* SimpleAlert.swift */; };
 		D8C37758296E925800408CFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C37757296E925800408CFB /* AppDelegate.swift */; };
 		D8C3775A296E925800408CFB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C37759296E925800408CFB /* SceneDelegate.swift */; };
 		D8C3775C296E925800408CFB /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3775B296E925800408CFB /* MainViewController.swift */; };
@@ -33,6 +41,12 @@
 		D878618329706B65004F112E /* NewWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutViewController.swift; sourceTree = "<group>"; };
 		D878618629707154004F112E /* DateAndRepeatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndRepeatView.swift; sourceTree = "<group>"; };
 		D878618829707172004F112E /* RepsOrTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepsOrTimerView.swift; sourceTree = "<group>"; };
+		D87CCFE12971339C000D5F1D /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		D87CCFE32971352F000D5F1D /* StatisticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewController.swift; sourceTree = "<group>"; };
+		D87CCFE52971357B000D5F1D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D87CCFEC29714E3C000D5F1D /* WorkoutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutModel.swift; sourceTree = "<group>"; };
+		D87CCFEF297155CC000D5F1D /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		D87CCFF229718610000D5F1D /* SimpleAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAlert.swift; sourceTree = "<group>"; };
 		D8C37754296E925800408CFB /* TrainingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrainingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C37757296E925800408CFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8C37759296E925800408CFB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +69,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D87CCFEB29714D5C000D5F1D /* RealmSwift in Frameworks */,
+				D87CCFE929714D5C000D5F1D /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +84,22 @@
 				D878618829707172004F112E /* RepsOrTimerView.swift */,
 			);
 			path = NewWorkoutVC;
+			sourceTree = "<group>";
+		};
+		D87CCFEE297155B1000D5F1D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D87CCFEF297155CC000D5F1D /* StorageManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D87CCFF1297185F2000D5F1D /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				D87CCFF229718610000D5F1D /* SimpleAlert.swift */,
+			);
+			path = Alerts;
 			sourceTree = "<group>";
 		};
 		D8C3774B296E925800408CFB = {
@@ -89,6 +121,8 @@
 		D8C37756296E925800408CFB /* TrainingApp */ = {
 			isa = PBXGroup;
 			children = (
+				D87CCFF1297185F2000D5F1D /* Alerts */,
+				D87CCFEE297155B1000D5F1D /* Services */,
 				D8C37770296E97EF00408CFB /* Extensions */,
 				D8C3776F296E97DD00408CFB /* Views */,
 				D8C3776E296E97CD00408CFB /* Models */,
@@ -124,6 +158,9 @@
 			children = (
 				D8C3775B296E925800408CFB /* MainViewController.swift */,
 				D878618329706B65004F112E /* NewWorkoutViewController.swift */,
+				D87CCFE12971339C000D5F1D /* MainTabBarController.swift */,
+				D87CCFE32971352F000D5F1D /* StatisticViewController.swift */,
+				D87CCFE52971357B000D5F1D /* ProfileViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -131,6 +168,7 @@
 		D8C3776E296E97CD00408CFB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D87CCFEC29714E3C000D5F1D /* WorkoutModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -207,6 +245,10 @@
 			dependencies = (
 			);
 			name = TrainingApp;
+			packageProductDependencies = (
+				D87CCFE829714D5C000D5F1D /* Realm */,
+				D87CCFEA29714D5C000D5F1D /* RealmSwift */,
+			);
 			productName = TrainingApp;
 			productReference = D8C37754296E925800408CFB /* TrainingApp.app */;
 			productType = "com.apple.product-type.application";
@@ -235,6 +277,9 @@
 				Base,
 			);
 			mainGroup = D8C3774B296E925800408CFB;
+			packageReferences = (
+				D87CCFE729714D5C000D5F1D /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			productRefGroup = D8C37755296E925800408CFB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -265,11 +310,15 @@
 			files = (
 				D8C37775296E9AD800408CFB /* UIView + Extensions.swift in Sources */,
 				D8C37773296E994900408CFB /* UIFont + Extensions.swift in Sources */,
+				D87CCFE22971339C000D5F1D /* MainTabBarController.swift in Sources */,
 				D8C37781296EAF7900408CFB /* CalendarView.swift in Sources */,
 				D8C37779296E9B1800408CFB /* UIStackView + Extensions.swift in Sources */,
 				D8C3775C296E925800408CFB /* MainViewController.swift in Sources */,
 				D878618729707154004F112E /* DateAndRepeatView.swift in Sources */,
+				D87CCFED29714E3C000D5F1D /* WorkoutModel.swift in Sources */,
+				D87CCFE62971357B000D5F1D /* ProfileViewController.swift in Sources */,
 				D80913B2296EEEAC00359B52 /* WorkoutTableViewCell.swift in Sources */,
+				D87CCFF0297155CC000D5F1D /* StorageManager.swift in Sources */,
 				D8C37777296E9AFB00408CFB /* UIColor + Extensions.swift in Sources */,
 				D8C377A3296ED2B200408CFB /* CalendarCollectionViewCell.swift in Sources */,
 				D878618929707172004F112E /* RepsOrTimerView.swift in Sources */,
@@ -277,6 +326,8 @@
 				D878618429706B65004F112E /* NewWorkoutViewController.swift in Sources */,
 				D8C3775A296E925800408CFB /* SceneDelegate.swift in Sources */,
 				D80913B4296EF49F00359B52 /* WeatherView.swift in Sources */,
+				D87CCFF329718610000D5F1D /* SimpleAlert.swift in Sources */,
+				D87CCFE42971352F000D5F1D /* StatisticViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +541,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D87CCFE729714D5C000D5F1D /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D87CCFE829714D5C000D5F1D /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D87CCFE729714D5C000D5F1D /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		D87CCFEA29714D5C000D5F1D /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D87CCFE729714D5C000D5F1D /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D8C3774C296E925800408CFB /* Project object */;
 }

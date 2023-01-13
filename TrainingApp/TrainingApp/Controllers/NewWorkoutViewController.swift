@@ -7,10 +7,20 @@
 
 import UIKit
 
+protocol NewWorkoutViewControllerDelegate: AnyObject {
+    func didSaveModel()
+}
+
 class NewWorkoutViewController: UIViewController {
+    
+    weak var delegate: NewWorkoutViewControllerDelegate?
     
     private let dateAndRepeatView = DateAndRepeatView()
     private let repsOrTimerView = RepsOrTimerView()
+    private let storageManager = StorageManager.shared
+    private var workoutModel = WorkoutModel()
+    
+    private let testImage = UIImage(named: "imageCell")
     
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -151,18 +161,61 @@ class NewWorkoutViewController: UIViewController {
         view.addGestureRecognizer(tapScreen)
     }
     
+    private func setModel() {
+        guard let nameWorkout = nameTextField.text else { return }
+        workoutModel.workoutName = nameWorkout
+        
+        workoutModel.workoutDate = dateAndRepeatView.datePicker.date
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.weekday], from: dateAndRepeatView.datePicker.date)
+        guard let weekday = components.weekday else { return }
+        workoutModel.workoutNumberOfDay = weekday
+        
+        workoutModel.workoutRepeat = (dateAndRepeatView.repeatSwitch.isOn)
+        
+        workoutModel.workoutSets = Int(repsOrTimerView.setsSlider.value)
+        workoutModel.workoutReps = Int(repsOrTimerView.repsSlider.value)
+        workoutModel.workoutTimer = Int(repsOrTimerView.timerSlider.value)
+        
+        guard let imageData = testImage?.pngData() else { return }
+        workoutModel.workoutImage = imageData
+    }
+    
+    
+    private func saveModel() {
+        guard let text = nameTextField.text else { return }
+        let count = text.filter{ $0.isNumber || $0.isLetter }.count
+        
+        if count != 0 && workoutModel.workoutSets != 0 && (workoutModel.workoutReps != 0 || workoutModel.workoutTimer != 0) {
+            storageManager.saveWorkoutModel(model: workoutModel)
+            alertOk(title: "Success", message: nil)
+            refreshWorkoutObjects()
+        } else {
+            alertOk(title: "Error", message: "Enter all parameters")
+        }
+    }
+    
+    private func refreshWorkoutObjects() {
+        dateAndRepeatView.datePicker.setDate(Date(), animated: true)
+        nameTextField.text = ""
+        dateAndRepeatView.repeatSwitch.isOn = true
+        repsOrTimerView.numberOfSetLabel.text = "0"
+        repsOrTimerView.setsSlider.value = 0
+        repsOrTimerView.numberOfRepsLabel.text = "0"
+        repsOrTimerView.repsSlider.value = 0
+        repsOrTimerView.numberOfTimerLabel.text = "0"
+        repsOrTimerView.timerSlider.value = 0
+        workoutModel = WorkoutModel()
+    }
+    
     @objc private func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
     
     @objc private func saveButtonTapped() {
-        print("saveButtonTapped")
-        
-        if dateAndRepeatView.repeatSwitch.isOn {
-            print("1")
-        } else {
-            print("2")
-        }
+        setModel()
+        saveModel()
+        delegate?.didSaveModel()
     }
     
     @objc private func hideKeyboard() {
@@ -171,7 +224,7 @@ class NewWorkoutViewController: UIViewController {
 }
 
 extension NewWorkoutViewController: UITextFieldDelegate {
-    
+    // MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         nameTextField.resignFirstResponder()
     }

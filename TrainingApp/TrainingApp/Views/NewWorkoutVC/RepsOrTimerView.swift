@@ -17,7 +17,7 @@ class RepsOrTimerView: UIView {
         return label
     }()
     
-    private let numberOfSetLabel: UILabel = {
+    let numberOfSetLabel: UILabel = {
         let label = UILabel()
         label.text = "1"
         label.font = .robotoMedium24()
@@ -41,7 +41,7 @@ class RepsOrTimerView: UIView {
         return label
     }()
     
-    private let numberOfRepsLabel: UILabel = {
+    let numberOfRepsLabel: UILabel = {
         let label = UILabel()
         label.text = "1"
         label.font = .robotoMedium24()
@@ -57,7 +57,7 @@ class RepsOrTimerView: UIView {
         return label
     }()
     
-    private let numberOfTimerLabel: UILabel = {
+    let numberOfTimerLabel: UILabel = {
         let label = UILabel()
         label.text = "0 min"
         label.font = .robotoMedium24()
@@ -65,7 +65,7 @@ class RepsOrTimerView: UIView {
         return label
     }()
     
-    private lazy var timerSlider: UISlider = {
+    lazy var timerSlider: UISlider = {
         let slider = UISlider()
         slider.minimumValue = 1
         slider.maximumValue = 600
@@ -75,7 +75,7 @@ class RepsOrTimerView: UIView {
         return slider
     }()
     
-    private lazy var setsSlider: UISlider = {
+    lazy var setsSlider: UISlider = {
         let slider = UISlider()
         slider.minimumValue = 1
         slider.maximumValue = 50
@@ -85,7 +85,7 @@ class RepsOrTimerView: UIView {
         return slider
     }()
     
-    private lazy var repsSlider: UISlider = {
+    lazy var repsSlider: UISlider = {
         let slider = UISlider()
         slider.minimumValue = 1
         slider.maximumValue = 50
@@ -191,7 +191,7 @@ class RepsOrTimerView: UIView {
     @objc private func timerSliderChanged() {
         
         let (min, sec) = { (secs: Int) -> (Int, Int) in
-            return ((secs % 3600) / 60, (secs % 3600) % 60)}(Int(timerSlider.value))
+            return (secs / 60, secs % 60)}(Int(timerSlider.value))
         
         numberOfTimerLabel.text = (sec != 0 ? "\(min) min \(sec) sec" : "\(min) min")
         

@@ -14,6 +14,7 @@ class MainViewController: UIViewController {
         imageView.backgroundColor = UIColor(named: "PhotoBack")
         imageView.layer.borderWidth = 5
         imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.cornerRadius = 50
         return imageView
     }()
     
@@ -68,7 +69,7 @@ class MainViewController: UIViewController {
     }()
     
     private let noWorkoutImageView: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.image = UIImage(named: "noWorkout")
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,10 +81,8 @@ class MainViewController: UIViewController {
     private let calendarView = CalendarView()
     private let idWorkoutTableViewCell = "idWorkoutTableViewCell"
     
-    override func viewDidLayoutSubviews() {
-        
-        userPhotoImageView.layer.cornerRadius = userPhotoImageView.frame.width / 2
-    }
+    private let storageManager = StorageManager.shared
+    private var workoutArray: WorkoutArray?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,7 +90,8 @@ class MainViewController: UIViewController {
         setupViews()
         setConstraints()
         setupTableView()
-        
+        workoutArray = storageManager.getWorkouts(date: Date())
+        tableView.reloadData()
     }
     
     private func setupTableView() {
@@ -117,23 +117,24 @@ class MainViewController: UIViewController {
     
     @objc private func addWorkoutButtonTapped() {
         let newWorkoutVC = NewWorkoutViewController()
+        newWorkoutVC.delegate = self
         present(newWorkoutVC, animated: true)
     }
-    
-    
 }
 
 extension MainViewController: UITableViewDataSource {
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        workoutArray?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: idWorkoutTableViewCell, for: indexPath) as? WorkoutTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: idWorkoutTableViewCell, for: indexPath) as? WorkoutTableViewCell,
+              let workoutArray else {
             return UITableViewCell()
         }
+        cell.cellConfigure(model: workoutArray[indexPath.row])
         return cell
     }
 }
@@ -187,7 +188,13 @@ extension MainViewController {
             noWorkoutImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             noWorkoutImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
             noWorkoutImageView.topAnchor.constraint(equalTo: workoutTodayLabel.bottomAnchor, constant: 0)
-         
+            
         ])
+    }
+}
+
+extension MainViewController: NewWorkoutViewControllerDelegate {
+    func didSaveModel() {
+        tableView.reloadData()
     }
 }

@@ -17,7 +17,7 @@ class WorkoutTableViewCell: UITableViewCell {
     }()
     
     private let workoutBackgroundView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = .specialBackground
         view.layer.cornerRadius = 20
         return view
@@ -49,11 +49,11 @@ class WorkoutTableViewCell: UITableViewCell {
     }()
     
     private lazy var completeButton: UIButton = {
-       let button = UIButton()
-        button.setTitle("Complete", for: .normal)
+        let button = UIButton()
+        button.setTitle("START", for: .normal)
         button.titleLabel?.font = .robotoBold16()
-        button.backgroundColor = .specialDarkGreen
-        button.tintColor = .white
+        button.backgroundColor = .specialYellow
+        button.tintColor = .specialDarkGreen
         button.layer.cornerRadius = 10
         button.addShadowOnView()
         button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
@@ -69,6 +69,26 @@ class WorkoutTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func cellConfigure(model: WorkoutModel) {
+        nameWorkoutLabel.text = model.workoutName
+        
+        let (min, sec) = { (secs: Int) -> (Int, Int) in
+            return (secs / 60, secs % 60)}(model.workoutTimer)
+        
+        let reps = (model.workoutTimer == 0 ? "Reps: \(model.workoutReps)" : "Timer: \(min) min \(sec) sec")
+        let sets = " Sets: \(model.workoutSets)"
+        
+        countApproachLabel.text = reps + sets
+        
+        guard let imageData = model.workoutImage else {
+            return
+        }
+        guard let image = UIImage(data: imageData) else {
+            return
+        }
+        workoutImageView.image = image
     }
     
     private func setupViews() {
@@ -112,12 +132,12 @@ class WorkoutTableViewCell: UITableViewCell {
             completeButton.trailingAnchor.constraint(equalTo: backgroundCell.trailingAnchor, constant: -10),
             completeButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             completeButton.topAnchor.constraint(equalTo: countApproachLabel.bottomAnchor)
-        
+            
         ])
     }
     
     @objc private func startButtonTapped() {
-      print("gggggg!@")
+        print("gggggg!@")
     }
     
 }
