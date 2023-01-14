@@ -9,8 +9,10 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    private let userPhotoImageView: UIImageView = {
+    private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = UIImage(named: "123")
+        imageView.clipsToBounds = true
         imageView.backgroundColor = UIColor(named: "PhotoBack")
         imageView.layer.borderWidth = 5
         imageView.layer.borderColor = UIColor.white.cgColor
@@ -91,6 +93,7 @@ class MainViewController: UIViewController {
         setConstraints()
         setupTableView()
         workoutArray = storageManager.getWorkouts(date: Date())
+        calendarView.delegate = self
         tableView.reloadData()
     }
     
@@ -100,19 +103,17 @@ class MainViewController: UIViewController {
         tableView.delegate = self
     }
     
-    
     private func setupViews() {
         
         view.backgroundColor = .specialBackground
         view.addSubviews(calendarView,
                          userNameLabel,
-                         userPhotoImageView,
+                         avatarImageView,
                          addWorkoutButton,
                          workoutTodayLabel,
                          tableView,
                          weatherView,
                          noWorkoutImageView)
-        
     }
     
     @objc private func addWorkoutButtonTapped() {
@@ -134,7 +135,9 @@ extension MainViewController: UITableViewDataSource {
               let workoutArray else {
             return UITableViewCell()
         }
+        
         cell.cellConfigure(model: workoutArray[indexPath.row])
+        cell.delegate = self
         return cell
     }
 }
@@ -145,24 +148,76 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         100
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let workoutArray else {
+            return nil
+        }
+        let action = UIContextualAction(style: .destructive, title: "") { _, _, _ in
+            let deleteModel = workoutArray[indexPath.row]
+            self.storageManager.deleteWorkoutModel(model: deleteModel)
+            tableView.reloadData()
+        }
+        
+        action.backgroundColor = .specialBackground
+        action.image = UIImage(named: "delete")
+        
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+}
+
+extension MainViewController: NewWorkoutViewControllerDelegate {
+    // MARK: - NewWorkoutViewControllerDelegate
+    func didSaveModel() {
+        tableView.reloadData()
+    }
+}
+
+extension MainViewController: StartWorkoutViewControllerDelegate {
+    // MARK: - StartWorkoutViewControllerDelegate
+    func didTapFinishWorkout() {
+        tableView.reloadData()
+    }
+}
+
+extension MainViewController: WorkoutTableViewCellDelegate {
+    // MARK: - StartWorkoutProtocol
+    func startButtonTapped(model: WorkoutModel) {
+        if model.workoutTimer == 0 {
+            let startWorkoutViewController = StartWorkoutViewController()
+            startWorkoutViewController.modalPresentationStyle = .fullScreen
+            startWorkoutViewController.workoutModel = model
+            startWorkoutViewController.delegate = self
+            present(startWorkoutViewController, animated: true)
+        } else {
+            print("timer")
+        }
+    }
+}
+
+extension MainViewController: CalendarViewDelegate {
+    // MARK: - CalendarViewDelegate
+    func selectItem(date: Date) {
+        workoutArray = storageManager.getWorkouts(date: date)
+        tableView.reloadData()
+    }
 }
 
 extension MainViewController {
-    
     // MARK: - setConstraints
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            userPhotoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            userPhotoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            userPhotoImageView.widthAnchor.constraint(equalToConstant: 100),
-            userPhotoImageView.heightAnchor.constraint(equalToConstant: 100),
+            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 100),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 100),
             
             calendarView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
             calendarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             calendarView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             calendarView.heightAnchor.constraint(equalToConstant: 70),
             
-            userNameLabel.leadingAnchor.constraint(equalTo: userPhotoImageView.trailingAnchor, constant: 5),
+            userNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 5),
             userNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             userNameLabel.bottomAnchor.constraint(equalTo: calendarView.topAnchor, constant: -10),
             
@@ -190,11 +245,5 @@ extension MainViewController {
             noWorkoutImageView.topAnchor.constraint(equalTo: workoutTodayLabel.bottomAnchor, constant: 0)
             
         ])
-    }
-}
-
-extension MainViewController: NewWorkoutViewControllerDelegate {
-    func didSaveModel() {
-        tableView.reloadData()
     }
 }

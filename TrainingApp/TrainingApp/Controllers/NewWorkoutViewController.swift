@@ -21,15 +21,7 @@ class NewWorkoutViewController: UIViewController {
     private var workoutModel = WorkoutModel()
     
     private let testImage = UIImage(named: "imageCell")
-    
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Name"
-        label.font = .robotoMedium14()
-        label.textColor = .specialLightBrown
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private let nameLabel = UILabel(text: "Name")
     
     private let newWorkoutLabel: UILabel = {
         let label = UILabel()
@@ -77,7 +69,6 @@ class NewWorkoutViewController: UIViewController {
         button.titleLabel?.font = .robotoBold16()
         button.tintColor = .white
         button.layer.cornerRadius = 10
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -85,11 +76,9 @@ class NewWorkoutViewController: UIViewController {
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(named: "closeButton"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         return button
     }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,9 +159,7 @@ class NewWorkoutViewController: UIViewController {
         let components = calendar.dateComponents([.weekday], from: dateAndRepeatView.datePicker.date)
         guard let weekday = components.weekday else { return }
         workoutModel.workoutNumberOfDay = weekday
-        
         workoutModel.workoutRepeat = (dateAndRepeatView.repeatSwitch.isOn)
-        
         workoutModel.workoutSets = Int(repsOrTimerView.setsSlider.value)
         workoutModel.workoutReps = Int(repsOrTimerView.repsSlider.value)
         workoutModel.workoutTimer = Int(repsOrTimerView.timerSlider.value)

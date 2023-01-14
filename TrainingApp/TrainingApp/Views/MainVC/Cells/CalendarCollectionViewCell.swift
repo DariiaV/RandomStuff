@@ -18,7 +18,7 @@ class CalendarCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let numberOfDayLabel: UILabel = {
+    let numberOfDayLabel: UILabel = {
         let label = UILabel()
         label.text = "20"
         label.font = .robotoBold20()

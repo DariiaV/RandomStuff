@@ -20,6 +20,10 @@
 		D87CCFED29714E3C000D5F1D /* WorkoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CCFEC29714E3C000D5F1D /* WorkoutModel.swift */; };
 		D87CCFF0297155CC000D5F1D /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CCFEF297155CC000D5F1D /* StorageManager.swift */; };
 		D87CCFF329718610000D5F1D /* SimpleAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CCFF229718610000D5F1D /* SimpleAlert.swift */; };
+		D8BD02CB2972B45700E35071 /* UILabel + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD02CA2972B45700E35071 /* UILabel + Extensions.swift */; };
+		D8BD02CE2972B58E00E35071 /* WorkoutParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD02CD2972B58E00E35071 /* WorkoutParametersView.swift */; };
+		D8BD02D02972B76100E35071 /* StartWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD02CF2972B76100E35071 /* StartWorkoutViewController.swift */; };
+		D8BD02D22972BAFA00E35071 /* OkCancelAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD02D12972BAFA00E35071 /* OkCancelAlert.swift */; };
 		D8C37758296E925800408CFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C37757296E925800408CFB /* AppDelegate.swift */; };
 		D8C3775A296E925800408CFB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C37759296E925800408CFB /* SceneDelegate.swift */; };
 		D8C3775C296E925800408CFB /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3775B296E925800408CFB /* MainViewController.swift */; };
@@ -47,6 +51,10 @@
 		D87CCFEC29714E3C000D5F1D /* WorkoutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutModel.swift; sourceTree = "<group>"; };
 		D87CCFEF297155CC000D5F1D /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		D87CCFF229718610000D5F1D /* SimpleAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAlert.swift; sourceTree = "<group>"; };
+		D8BD02CA2972B45700E35071 /* UILabel + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extensions.swift"; sourceTree = "<group>"; };
+		D8BD02CD2972B58E00E35071 /* WorkoutParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutParametersView.swift; sourceTree = "<group>"; };
+		D8BD02CF2972B76100E35071 /* StartWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutViewController.swift; sourceTree = "<group>"; };
+		D8BD02D12972BAFA00E35071 /* OkCancelAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OkCancelAlert.swift; sourceTree = "<group>"; };
 		D8C37754296E925800408CFB /* TrainingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrainingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C37757296E925800408CFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8C37759296E925800408CFB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -98,8 +106,17 @@
 			isa = PBXGroup;
 			children = (
 				D87CCFF229718610000D5F1D /* SimpleAlert.swift */,
+				D8BD02D12972BAFA00E35071 /* OkCancelAlert.swift */,
 			);
 			path = Alerts;
+			sourceTree = "<group>";
+		};
+		D8BD02CC2972B57400E35071 /* StartWorkoutVC */ = {
+			isa = PBXGroup;
+			children = (
+				D8BD02CD2972B58E00E35071 /* WorkoutParametersView.swift */,
+			);
+			path = StartWorkoutVC;
 			sourceTree = "<group>";
 		};
 		D8C3774B296E925800408CFB = {
@@ -121,14 +138,13 @@
 		D8C37756296E925800408CFB /* TrainingApp */ = {
 			isa = PBXGroup;
 			children = (
-				D87CCFF1297185F2000D5F1D /* Alerts */,
-				D87CCFEE297155B1000D5F1D /* Services */,
-				D8C37770296E97EF00408CFB /* Extensions */,
-				D8C3776F296E97DD00408CFB /* Views */,
-				D8C3776E296E97CD00408CFB /* Models */,
-				D8C3776D296E97B000408CFB /* Controllers */,
-				D8C3776C296E978400408CFB /* Resources */,
 				D8C3776B296E96FC00408CFB /* Application */,
+				D8C3776D296E97B000408CFB /* Controllers */,
+				D8C37770296E97EF00408CFB /* Extensions */,
+				D8C3776E296E97CD00408CFB /* Models */,
+				D8C3776C296E978400408CFB /* Resources */,
+				D87CCFEE297155B1000D5F1D /* Services */,
+				D8C3776F296E97DD00408CFB /* Views */,
 			);
 			path = TrainingApp;
 			sourceTree = "<group>";
@@ -156,11 +172,12 @@
 		D8C3776D296E97B000408CFB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D87CCFE12971339C000D5F1D /* MainTabBarController.swift */,
 				D8C3775B296E925800408CFB /* MainViewController.swift */,
 				D878618329706B65004F112E /* NewWorkoutViewController.swift */,
-				D87CCFE12971339C000D5F1D /* MainTabBarController.swift */,
-				D87CCFE32971352F000D5F1D /* StatisticViewController.swift */,
 				D87CCFE52971357B000D5F1D /* ProfileViewController.swift */,
+				D8BD02CF2972B76100E35071 /* StartWorkoutViewController.swift */,
+				D87CCFE32971352F000D5F1D /* StatisticViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -176,6 +193,8 @@
 		D8C3776F296E97DD00408CFB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D8BD02CC2972B57400E35071 /* StartWorkoutVC */,
+				D87CCFF1297185F2000D5F1D /* Alerts */,
 				D878618529707139004F112E /* NewWorkoutVC */,
 				D8C3777F296EAF5A00408CFB /* MainVC */,
 			);
@@ -197,6 +216,7 @@
 				D8C37774296E9AD800408CFB /* UIView + Extensions.swift */,
 				D8C37776296E9AFB00408CFB /* UIColor + Extensions.swift */,
 				D8C37778296E9B1800408CFB /* UIStackView + Extensions.swift */,
+				D8BD02CA2972B45700E35071 /* UILabel + Extensions.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -310,9 +330,12 @@
 			files = (
 				D8C37775296E9AD800408CFB /* UIView + Extensions.swift in Sources */,
 				D8C37773296E994900408CFB /* UIFont + Extensions.swift in Sources */,
+				D8BD02CE2972B58E00E35071 /* WorkoutParametersView.swift in Sources */,
 				D87CCFE22971339C000D5F1D /* MainTabBarController.swift in Sources */,
 				D8C37781296EAF7900408CFB /* CalendarView.swift in Sources */,
 				D8C37779296E9B1800408CFB /* UIStackView + Extensions.swift in Sources */,
+				D8BD02D02972B76100E35071 /* StartWorkoutViewController.swift in Sources */,
+				D8BD02CB2972B45700E35071 /* UILabel + Extensions.swift in Sources */,
 				D8C3775C296E925800408CFB /* MainViewController.swift in Sources */,
 				D878618729707154004F112E /* DateAndRepeatView.swift in Sources */,
 				D87CCFED29714E3C000D5F1D /* WorkoutModel.swift in Sources */,
@@ -327,6 +350,7 @@
 				D8C3775A296E925800408CFB /* SceneDelegate.swift in Sources */,
 				D80913B4296EF49F00359B52 /* WeatherView.swift in Sources */,
 				D87CCFF329718610000D5F1D /* SimpleAlert.swift in Sources */,
+				D8BD02D22972BAFA00E35071 /* OkCancelAlert.swift in Sources */,
 				D87CCFE42971352F000D5F1D /* StatisticViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol WorkoutTableViewCellDelegate: AnyObject {
+    func startButtonTapped(model: WorkoutModel)
+}
+
 class WorkoutTableViewCell: UITableViewCell {
+    
+    weak var delegate: WorkoutTableViewCellDelegate?
+    var workoutModel = WorkoutModel()
     
     private let backgroundCell: UIView = {
         let view = UIView()
@@ -26,13 +33,11 @@ class WorkoutTableViewCell: UITableViewCell {
     private let workoutImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "imageCell")
         return imageView
     }()
     
     private let nameWorkoutLabel: UILabel = {
         let label = UILabel()
-        label.text = "Pull Ups"
         label.textColor = .specialBlack
         label.font = .robotoMedium22()
         label.textAlignment = .left
@@ -41,7 +46,6 @@ class WorkoutTableViewCell: UITableViewCell {
     
     private let countApproachLabel: UILabel = {
         let label = UILabel()
-        label.text = "Reps: 10 Sets: 2"
         label.textColor = .specialGray
         label.font = .robotoMedium16()
         label.textAlignment = .left
@@ -50,10 +54,7 @@ class WorkoutTableViewCell: UITableViewCell {
     
     private lazy var completeButton: UIButton = {
         let button = UIButton()
-        button.setTitle("START", for: .normal)
         button.titleLabel?.font = .robotoBold16()
-        button.backgroundColor = .specialYellow
-        button.tintColor = .specialDarkGreen
         button.layer.cornerRadius = 10
         button.addShadowOnView()
         button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
@@ -64,7 +65,6 @@ class WorkoutTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupViews()
-        setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -89,6 +89,19 @@ class WorkoutTableViewCell: UITableViewCell {
             return
         }
         workoutImageView.image = image
+        
+        if model.status {
+            completeButton.setTitle("COMPLETE", for: .normal)
+            completeButton.tintColor = .white
+            completeButton.backgroundColor = .specialGreen
+            completeButton.isEnabled = false
+        } else {
+            completeButton.setTitle("START", for: .normal)
+            completeButton.tintColor = .specialDarkGreen
+            completeButton.backgroundColor = .specialYellow
+            completeButton.isEnabled = true
+        }
+        workoutModel = model
     }
     
     private func setupViews() {
@@ -101,9 +114,7 @@ class WorkoutTableViewCell: UITableViewCell {
                                 countApproachLabel)
         
         workoutBackgroundView.addSubviews(workoutImageView)
-    }
-    
-    private func setConstraints() {
+        
         NSLayoutConstraint.activate([
             backgroundCell.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             backgroundCell.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
@@ -132,12 +143,12 @@ class WorkoutTableViewCell: UITableViewCell {
             completeButton.trailingAnchor.constraint(equalTo: backgroundCell.trailingAnchor, constant: -10),
             completeButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             completeButton.topAnchor.constraint(equalTo: countApproachLabel.bottomAnchor)
-            
         ])
     }
+  
     
     @objc private func startButtonTapped() {
-        print("gggggg!@")
+        delegate?.startButtonTapped(model: workoutModel)
     }
     
 }

@@ -11,13 +11,22 @@ typealias WorkoutArray = Results<WorkoutModel>
 
 class StorageManager {
     static let shared = StorageManager()
-    private let localRealm = try! Realm()
+    private let realm: Realm
     
-    private init() {}
+    private init() {
+        let config = Realm.Configuration(schemaVersion: 1)
+        Realm.Configuration.defaultConfiguration = config
+        do {
+            self.realm = try Realm()
+        }
+        catch {
+            fatalError("no realm!")
+        }
+    }
     
     private func write(completion: () -> Void) {
         do {
-            try localRealm.write {
+            try realm.write {
                 completion()
             }
         } catch {
@@ -26,14 +35,28 @@ class StorageManager {
     }
     
     func getWorkouts(date: Date) -> WorkoutArray? {
-        
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.weekday], from: date)
+        let formatter = DateFormatter()
+        let components = calendar.dateComponents([.weekday, .day, .month, .year], from: date)
         guard let weekday = components.weekday else {
             return nil
         }
+        guard let day = components.day else {
+            return nil
+        }
+        guard let month = components.month else {
+            return nil
+        }
+        guard let year = components.year else {
+            return nil
+        }
         
-        let dateStart = date
+        formatter.timeZone = TimeZone(abbreviation: "UTC")
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        
+        guard let dateStart = formatter.date(from: "\(year)/\(month)/\(day) 00:00") else {
+            return nil
+        }
         let dateEnd: Date = {
             let components = DateComponents(day: 1, second: -1)
             return Calendar.current.date(byAdding: components, to: dateStart) ?? Date()
@@ -42,82 +65,25 @@ class StorageManager {
         let predicateRepeat = NSPredicate(format: "workoutNumberOfDay = \(weekday) AND workoutRepeat = true")
         let predicateUnrepeated = NSPredicate(format: "workoutRepeat = false AND workoutDate BETWEEN %@", [dateStart, dateEnd])
         let compound = NSCompoundPredicate(type: .or, subpredicates: [predicateRepeat, predicateUnrepeated])
-        return localRealm.objects(WorkoutModel.self).filter(compound).sorted(byKeyPath: "workoutName")
+        return realm.objects(WorkoutModel.self).filter(compound).sorted(byKeyPath: "workoutName")
         
     }
     
     func saveWorkoutModel(model: WorkoutModel) {
         write {
-            localRealm.add(model)
+            realm.add(model)
+        }
+    }
+    
+    func updateWorkoutModel(model: WorkoutModel, bool: Bool) {
+        write {
+            model.status = bool
+        }
+    }
+    
+    func deleteWorkoutModel(model: WorkoutModel) {
+        write {
+            realm.delete(model)
         }
     }
 }
-
-//class StorageManager {
-//    static let shared = StorageManager()
-//    let realm = try! Realm()
-//
-//    private init() {}
-//
-//    // MARK: - Task List
-//    func save(_ taskLists: [TaskList]) {
-//        write {
-//            realm.add(taskLists)
-//        }
-//    }
-//
-//    func save(_ taskList: TaskList) {
-//        write {
-//            realm.add(taskList)
-//        }
-//    }
-//
-//    func delete<T>(_ taskList: T) {
-//        write {
-//            if let objectToDelete = taskList as? TaskList {
-//                realm.delete(objectToDelete.tasks)
-//                realm.delete(objectToDelete)
-//            } else if let objectToDelete = taskList as? Task {
-//                realm.delete(objectToDelete)
-//            }
-//        }
-//    }
-//
-//    func edit<T>(_ taskList: T, newValue: String, newNote: String? = nil) {
-//        write {
-//            if let objectToEdit = taskList as? TaskList {
-//                objectToEdit.name = newValue
-//            } else if let objectToEdit = taskList as? Task {
-//                objectToEdit.name = newValue
-//                objectToEdit.note = newNote ?? ""
-//            }
-//        }
-//    }
-//
-//    func done<T>(_ taskList: T) {
-//        write {
-//            if let objectToDone = taskList as? TaskList {
-//                objectToDone.tasks.setValue(true, forKey: "isComplete")
-//            } else if let objectToDone = taskList as? Task {
-//                objectToDone.isComplete.toggle()
-//            }
-//        }
-//    }
-//
-//    // MARK: - Tasks
-//    func save(_ task: Task, to taskList: TaskList) {
-//        write {
-//            taskList.tasks.append(task)
-//        }
-//    }
-//
-//    private func write(completion: () -> Void) {
-//        do {
-//            try realm.write {
-//                completion()
-//            }
-//        } catch {
-//            print(error)
-//        }
-//    }
-//}

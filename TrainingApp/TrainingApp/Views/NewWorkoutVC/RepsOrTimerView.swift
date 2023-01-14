@@ -67,7 +67,7 @@ class RepsOrTimerView: UIView {
     
     lazy var timerSlider: UISlider = {
         let slider = UISlider()
-        slider.minimumValue = 1
+        slider.minimumValue = 0
         slider.maximumValue = 600
         slider.maximumTrackTintColor = .specialLightBrown
         slider.minimumTrackTintColor = .specialGreen
@@ -77,7 +77,7 @@ class RepsOrTimerView: UIView {
     
     lazy var setsSlider: UISlider = {
         let slider = UISlider()
-        slider.minimumValue = 1
+        slider.minimumValue = 0
         slider.maximumValue = 50
         slider.maximumTrackTintColor = .specialLightBrown
         slider.minimumTrackTintColor = .specialGreen
@@ -87,7 +87,7 @@ class RepsOrTimerView: UIView {
     
     lazy var repsSlider: UISlider = {
         let slider = UISlider()
-        slider.minimumValue = 1
+        slider.minimumValue = 0
         slider.maximumValue = 50
         slider.maximumTrackTintColor = .specialLightBrown
         slider.minimumTrackTintColor = .specialGreen
@@ -95,9 +95,23 @@ class RepsOrTimerView: UIView {
         return slider
     }()
     
-    var setsStackView = UIStackView()
-    var repsStackView = UIStackView()
-    var timerStackView = UIStackView()
+    private let setsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = 10
+        return stackView
+    }()
+    
+    private let repsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = 10
+        return stackView
+    }()
+    
+    private let timerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = 10
+        return stackView
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -114,17 +128,10 @@ class RepsOrTimerView: UIView {
         layer.cornerRadius = 10
         translatesAutoresizingMaskIntoConstraints = false
         
-        setsStackView = UIStackView(arrangedSubviews: [setsLabel,
-                                                       numberOfSetLabel],
-                                    axis: .horizontal,
-                                    spacing: 10)
-        repsStackView = UIStackView(arrangedSubviews: [repsLabel, numberOfRepsLabel],
-                                    axis: .horizontal,
-                                    spacing: 10)
-        timerStackView = UIStackView(arrangedSubviews: [timerLabel, numberOfTimerLabel],
-                                     axis: .horizontal,
-                                     spacing: 10)
-        
+        setsStackView.addArrangedSubviews(setsLabel, numberOfSetLabel)
+        repsStackView.addArrangedSubviews(repsLabel, numberOfRepsLabel)
+        timerStackView.addArrangedSubviews(timerLabel, numberOfTimerLabel)
+ 
         addSubviews(setsStackView,
                     setsSlider,
                     repeatOrTimerLabel,

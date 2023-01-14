@@ -72,18 +72,10 @@ class DateAndRepeatView: UIView {
     private func setupViews() {
         backgroundColor = .specialBrown
         layer.cornerRadius = 10
-        
-        dateStackView.addArrangedSubview(dateLabel)
-        dateStackView.addArrangedSubview(datePicker)
-        repeatStackView.addArrangedSubview(repeatLabel)
-        repeatStackView.addArrangedSubview(repeatSwitch)
-        
-        contentStackView.addArrangedSubview(dateStackView)
-        contentStackView.addArrangedSubview(repeatStackView)
-        
+        dateStackView.addArrangedSubviews(dateLabel, datePicker)
+        repeatStackView.addArrangedSubviews(repeatLabel, repeatSwitch)
+        contentStackView.addArrangedSubviews(dateStackView, repeatStackView)
         addSubviews(contentStackView)
-        
-        
         
         NSLayoutConstraint.activate([
             contentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
