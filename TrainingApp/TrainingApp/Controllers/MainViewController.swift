@@ -184,13 +184,16 @@ extension MainViewController: WorkoutTableViewCellDelegate {
     // MARK: - StartWorkoutProtocol
     func startButtonTapped(model: WorkoutModel) {
         if model.workoutTimer == 0 {
-            let startWorkoutViewController = StartWorkoutViewController()
+            let startWorkoutViewController = RepsWorkoutViewController()
             startWorkoutViewController.modalPresentationStyle = .fullScreen
             startWorkoutViewController.workoutModel = model
             startWorkoutViewController.delegate = self
             present(startWorkoutViewController, animated: true)
         } else {
-            print("timer")
+            let timerWorkoutViewController = TimerWorkoutViewController()
+            timerWorkoutViewController.modalPresentationStyle = .fullScreen
+            timerWorkoutViewController.workoutModel = model
+            present(timerWorkoutViewController, animated: true)
         }
     }
 }

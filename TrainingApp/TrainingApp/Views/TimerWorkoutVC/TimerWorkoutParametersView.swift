@@ -1,22 +1,22 @@
 //
-//  WorkoutParametersView.swift
+//  TimerWorkoutParametersView.swift
 //  TrainingApp
 //
-//  Created by Дария Григорьева on 14.01.2023.
+//  Created by Дария Григорьева on 15.01.2023.
 //
 
 import UIKit
 
-protocol WorkoutParametersDelegate: AnyObject {
-    func nextSetTapped()
-    func editingTapped()
-    
+protocol TimerWorkoutParametersDelegate: AnyObject {
+    func nextSetTimerTapped()
+    func editingTimerTapped()
 }
 
-class WorkoutParametersView: UIView {
-    weak var delegate: WorkoutParametersDelegate?
+class TimerWorkoutParametersView: UIView {
     
-    private let workoutNameLabel: UILabel = {
+    weak var delegate: TimerWorkoutParametersDelegate?
+    
+    let workoutNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Name"
         label.textColor = .specialGray
@@ -37,7 +37,6 @@ class WorkoutParametersView: UIView {
     let numberOfSetsLabel: UILabel = {
         let label = UILabel()
         label.text = "1/4"
-        label.textAlignment = .right
         label.textColor = .specialGray
         label.font = .robotoMedium24()
         return label
@@ -49,18 +48,17 @@ class WorkoutParametersView: UIView {
         return view
     }()
     
-    private let repsLabel: UILabel = {
+    private let timerLabel: UILabel = {
         let label = UILabel()
-        label.text = "Reps"
+        label.text = "Time of set"
         label.textColor = .specialGray
         label.font = .robotoMedium18()
         return label
     }()
     
-    let numberOfRepsLabel: UILabel = {
+    let numberOfTimerLabel: UILabel = {
         let label = UILabel()
         label.text = "20"
-        label.textAlignment = .right
         label.textColor = .specialGray
         label.font = .robotoMedium24()
         return label
@@ -72,7 +70,7 @@ class WorkoutParametersView: UIView {
         return view
     }()
     
-    private lazy var editingButton: UIButton = {
+    lazy var editingButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "editing")?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.setTitle("Editing", for: .normal)
@@ -82,7 +80,7 @@ class WorkoutParametersView: UIView {
         return button
     }()
     
-    private lazy var nextSetsButton: UIButton = {
+    lazy var nextSetsButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .specialYellow
         button.layer.cornerRadius = 10
@@ -95,18 +93,17 @@ class WorkoutParametersView: UIView {
     
     private let repsStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.distribution = .fillEqually
+        stackView.distribution = .equalSpacing
         stackView.spacing = 10
         return stackView
     }()
+    
     private let setsStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.distribution = .fillEqually
         stackView.spacing = 10
+        stackView.distribution = .equalSpacing
         return stackView
     }()
-    
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -117,22 +114,10 @@ class WorkoutParametersView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setLabelsText(workoutName: String, numberOfSets: String, numberOfReps: String) {
-        workoutNameLabel.text = workoutName
-        numberOfSetsLabel.text = numberOfSets
-        numberOfRepsLabel.text = numberOfReps
-    }
-    
-    func setNumberOfSets(text: String) {
-        numberOfSetsLabel.text = text
-    }
-    
     private func setupViews() {
         backgroundColor = .specialBrown
         layer.cornerRadius = 10
-        
-        setsStackView.addArrangedSubviews(setsLabel, numberOfSetsLabel)
-        repsStackView.addArrangedSubviews(repsLabel, numberOfRepsLabel)
+        translatesAutoresizingMaskIntoConstraints = false
         
         addSubviews(workoutNameLabel,
                     setsStackView,
@@ -141,6 +126,9 @@ class WorkoutParametersView: UIView {
                     repsLineView,
                     editingButton,
                     nextSetsButton)
+        
+        setsStackView.addArrangedSubviews(setsLabel, numberOfSetsLabel)
+        repsStackView.addArrangedSubviews(timerLabel, numberOfTimerLabel)
         
         NSLayoutConstraint.activate([
             workoutNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
@@ -180,11 +168,11 @@ class WorkoutParametersView: UIView {
     }
     
     @objc private func editingButtonTapped() {
-        delegate?.editingTapped()
+        delegate?.editingTimerTapped()
     }
     
     @objc private func nextSetsButtonTapped() {
-        delegate?.nextSetTapped()
+        delegate?.nextSetTimerTapped()
     }
-    
 }
+

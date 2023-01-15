@@ -11,10 +11,11 @@ protocol StartWorkoutViewControllerDelegate: AnyObject {
     func didTapFinishWorkout()
 }
 
-class StartWorkoutViewController: UIViewController {
+class RepsWorkoutViewController: UIViewController {
     
     weak var delegate: StartWorkoutViewControllerDelegate?
     var workoutModel = WorkoutModel()
+    let customAlert = CustomAlert()
     
     private let workoutParametersView = WorkoutParametersView()
     private let detailsLabel = UILabel(text: "Details")
@@ -54,7 +55,7 @@ class StartWorkoutViewController: UIViewController {
         return button
     }()
     
-    private var numberOfSet = 1
+    var numberOfSet = 1
     
     override func viewDidLayoutSubviews() {
         closeButton.layer.cornerRadius = closeButton.frame.height / 2
@@ -65,7 +66,7 @@ class StartWorkoutViewController: UIViewController {
         
         setupViews()
         setWorkoutParameters()
-        workoutParametersView.cellNextSetDelegate = self
+        workoutParametersView.delegate = self
     }
     
     private func setupViews() {
@@ -116,7 +117,7 @@ class StartWorkoutViewController: UIViewController {
     @objc private func finishButtonTapped() {
         if numberOfSet == workoutModel.workoutSets {
             dismiss(animated: true)
-            storageManager.updateWorkoutModel(model: workoutModel, bool: true)
+            storageManager.updateStatusWorkoutModel(model: workoutModel, bool: true)
             delegate?.didTapFinishWorkout()
         } else {
             alertOkCancel(title: "Warning", message: "You haven't finished your workout") {
@@ -132,8 +133,24 @@ class StartWorkoutViewController: UIViewController {
     }
 }
 
-extension StartWorkoutViewController: NextSetProtocol {
-    // MARK: - NextSetProtocol
+extension RepsWorkoutViewController: WorkoutParametersDelegate {
+    // MARK: - WorkoutParametersDelegate
+    func editingTapped() {
+        customAlert.alertCustom(viewController: self, repsOrTimer: "Reps") { [self] sets, reps in
+            if sets != "" && reps != "" {
+                workoutParametersView.numberOfSetsLabel.text = "\(numberOfSet)/\(sets)"
+                workoutParametersView.numberOfRepsLabel.text = reps
+                guard let numberOfSets = Int(sets) else {
+                    return
+                }
+                guard let numberOfReps = Int(reps) else {
+                    return
+                }
+                storageManager.updateSetsRepsWorkoutModel(model: workoutModel, sets: numberOfSets, reps: numberOfReps)
+            }
+        }
+    }
+    
     func nextSetTapped() {
         if numberOfSet < workoutModel.workoutSets {
             numberOfSet += 1

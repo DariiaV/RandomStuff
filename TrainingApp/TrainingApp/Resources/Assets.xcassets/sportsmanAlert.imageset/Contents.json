@@ -1,16 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "Girl.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Ellipse 1@3x 1@2x.png",
+      "filename" : "Girl@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Ellipse 1@3x 1@3x.png",
+      "filename" : "Girl@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
