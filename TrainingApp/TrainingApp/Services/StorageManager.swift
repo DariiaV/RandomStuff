@@ -35,33 +35,6 @@ class StorageManager {
     }
     
     func getWorkouts(date: Date) -> WorkoutArray? {
-        //        let calendar = Calendar.current
-        //        let formatter = DateFormatter()
-        //        let components = calendar.dateComponents([.weekday, .day, .month, .year], from: date)
-        //        guard let weekday = components.weekday else {
-        //            return nil
-        //        }
-        //        guard let day = components.day else {
-        //            return nil
-        //        }
-        //        guard let month = components.month else {
-        //            return nil
-        //        }
-        //        guard let year = components.year else {
-        //            return nil
-        //        }
-        //
-        //        formatter.timeZone = TimeZone(abbreviation: "UTC")
-        //        formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        //
-        //        guard let dateStart = formatter.date(from: "\(year)/\(month)/\(day) 00:00") else {
-        //            return nil
-        //        }
-        //        let dateEnd: Date = {
-        //            let components = DateComponents(day: 1, second: -1)
-        //            return Calendar.current.date(byAdding: components, to: dateStart) ?? Date()
-        //        }()
-        
         let dateTimeZone = date.localDate()
         let weekday = dateTimeZone.getWeekdayNumber()
         let dateStart = dateTimeZone.startEndDate().0
@@ -72,6 +45,12 @@ class StorageManager {
         let compound = NSCompoundPredicate(type: .or, subpredicates: [predicateRepeat, predicateUnrepeated])
         return realm.objects(WorkoutModel.self).filter(compound).sorted(byKeyPath: "workoutName")
         
+    }
+    
+    func getWorkouts(name: String, dateStart: Date) -> WorkoutArray {
+        let dateEnd = Date().localDate()
+        let predicateDifference = NSPredicate(format: "workoutName = '\(name)' AND workoutDate BETWEEN %@", [dateStart, dateEnd])
+        return realm.objects(WorkoutModel.self).filter(predicateDifference).sorted(byKeyPath: "workoutDate")
     }
     
     func saveWorkoutModel(model: WorkoutModel) {
@@ -103,6 +82,39 @@ class StorageManager {
     func deleteWorkoutModel(model: WorkoutModel) {
         write {
             realm.delete(model)
+        }
+    }
+    
+    func getWorkoutsName() -> [String] {
+        var nameArray = [String]()
+        let workoutArray = realm.objects(WorkoutModel.self)
+
+        for workoutModel in workoutArray {
+            if !nameArray.contains(workoutModel.workoutName) {
+                nameArray.append(workoutModel.workoutName)
+            }
+        }
+        return nameArray
+    }
+    
+    //UserModel
+    
+    func saveUserModel(model: UserModel) {
+       write {
+            realm.add(model)
+        }
+    }
+    
+    func updateUserModel(model: UserModel) {
+        let users = realm.objects(UserModel.self)
+
+        try! realm.write {
+            users[0].userFirstName = model.userFirstName
+            users[0].userSecondName = model.userSecondName
+            users[0].userHeight = model.userHeight
+            users[0].userWeight = model.userWeight
+            users[0].userTarget = model.userTarget
+            users[0].userImage = model.userImage
         }
     }
 }

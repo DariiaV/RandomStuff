@@ -66,7 +66,6 @@ class MainViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.bounces = false
-        //tableView.isHidden = true
         return tableView
     }()
     
@@ -90,11 +89,10 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setupViews()
-        setConstraints()
         setupTableView()
         workoutArray = storageManager.getWorkouts(date: Date())
         calendarView.delegate = self
-        tableView.reloadData()
+        checkWorkoutsToday()
     }
     
     private func setupTableView() {
@@ -114,6 +112,57 @@ class MainViewController: UIViewController {
                          tableView,
                          weatherView,
                          noWorkoutImageView)
+        
+        NSLayoutConstraint.activate([
+            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 100),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 100),
+            
+            calendarView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            calendarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            calendarView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            calendarView.heightAnchor.constraint(equalToConstant: 70),
+            
+            userNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 5),
+            userNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            userNameLabel.bottomAnchor.constraint(equalTo: calendarView.topAnchor, constant: -10),
+            
+            addWorkoutButton.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 5),
+            addWorkoutButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            addWorkoutButton.heightAnchor.constraint(equalToConstant: 80),
+            addWorkoutButton.widthAnchor.constraint(equalToConstant: 80),
+            
+            workoutTodayLabel.topAnchor.constraint(equalTo: addWorkoutButton.bottomAnchor, constant: 10),
+            workoutTodayLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            
+            tableView.topAnchor.constraint(equalTo: workoutTodayLabel.bottomAnchor, constant: 0),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            
+            weatherView.topAnchor.constraint(equalTo: addWorkoutButton.topAnchor),
+            weatherView.bottomAnchor.constraint(equalTo: addWorkoutButton.bottomAnchor),
+            weatherView.leadingAnchor.constraint(equalTo: addWorkoutButton.trailingAnchor, constant: 10),
+            weatherView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            
+            noWorkoutImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            noWorkoutImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            noWorkoutImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
+            noWorkoutImageView.topAnchor.constraint(equalTo: workoutTodayLabel.bottomAnchor, constant: 0)
+        ])
+    }
+    
+    private func checkWorkoutsToday() {
+        if let workoutArray,
+           workoutArray.isEmpty {
+            tableView.isHidden = true
+            noWorkoutImageView.isHidden = false
+        } else {
+            tableView.isHidden = false
+            noWorkoutImageView.isHidden = true
+            tableView.reloadData()
+        }
     }
     
     @objc private func addWorkoutButtonTapped() {
@@ -156,7 +205,7 @@ extension MainViewController: UITableViewDelegate {
         let action = UIContextualAction(style: .destructive, title: "") { _, _, _ in
             let deleteModel = workoutArray[indexPath.row]
             self.storageManager.deleteWorkoutModel(model: deleteModel)
-            tableView.reloadData()
+            self.checkWorkoutsToday()
         }
         
         action.backgroundColor = .specialBackground
@@ -169,14 +218,14 @@ extension MainViewController: UITableViewDelegate {
 extension MainViewController: NewWorkoutViewControllerDelegate {
     // MARK: - NewWorkoutViewControllerDelegate
     func didSaveModel() {
-        tableView.reloadData()
+        checkWorkoutsToday()
     }
 }
 
 extension MainViewController: StartWorkoutViewControllerDelegate {
     // MARK: - StartWorkoutViewControllerDelegate
     func didTapFinishWorkout() {
-        tableView.reloadData()
+        checkWorkoutsToday()
     }
 }
 
@@ -202,51 +251,7 @@ extension MainViewController: CalendarViewDelegate {
     // MARK: - CalendarViewDelegate
     func selectItem(date: Date) {
         workoutArray = storageManager.getWorkouts(date: date)
-        tableView.reloadData()
+        checkWorkoutsToday()
     }
 }
 
-extension MainViewController {
-    // MARK: - setConstraints
-    private func setConstraints() {
-        NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 100),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 100),
-            
-            calendarView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
-            calendarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            calendarView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            calendarView.heightAnchor.constraint(equalToConstant: 70),
-            
-            userNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 5),
-            userNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            userNameLabel.bottomAnchor.constraint(equalTo: calendarView.topAnchor, constant: -10),
-            
-            addWorkoutButton.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 5),
-            addWorkoutButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            addWorkoutButton.heightAnchor.constraint(equalToConstant: 80),
-            addWorkoutButton.widthAnchor.constraint(equalToConstant: 80),
-            
-            workoutTodayLabel.topAnchor.constraint(equalTo: addWorkoutButton.bottomAnchor, constant: 10),
-            workoutTodayLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            
-            tableView.topAnchor.constraint(equalTo: workoutTodayLabel.bottomAnchor, constant: 0),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-            
-            weatherView.topAnchor.constraint(equalTo: addWorkoutButton.topAnchor),
-            weatherView.bottomAnchor.constraint(equalTo: addWorkoutButton.bottomAnchor),
-            weatherView.leadingAnchor.constraint(equalTo: addWorkoutButton.trailingAnchor, constant: 10),
-            weatherView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            
-            noWorkoutImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            noWorkoutImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            noWorkoutImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
-            noWorkoutImageView.topAnchor.constraint(equalTo: workoutTodayLabel.bottomAnchor, constant: 0)
-            
-        ])
-    }
-}
