@@ -11,6 +11,9 @@
 		D80913B4296EF49F00359B52 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80913B3296EF49F00359B52 /* WeatherView.swift */; };
 		D86303C929754E950054C3F9 /* StatisticTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86303C829754E950054C3F9 /* StatisticTableViewCell.swift */; };
 		D86303CB297554470054C3F9 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86303CA297554470054C3F9 /* UserModel.swift */; };
+		D86303CE297589A90054C3F9 /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86303CD297589A90054C3F9 /* ProfileCollectionViewCell.swift */; };
+		D86303D0297596E50054C3F9 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86303CF297596E50054C3F9 /* SettingViewController.swift */; };
+		D86303D42975C0C20054C3F9 /* GalleryOrPhotoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86303D32975C0C20054C3F9 /* GalleryOrPhotoAlert.swift */; };
 		D86E67A72973FD270084F2F7 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86E67A62973FD270084F2F7 /* CustomAlert.swift */; };
 		D86E67A929742D9C0084F2F7 /* TimerWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86E67A829742D9C0084F2F7 /* TimerWorkoutViewController.swift */; };
 		D86E67AB297435660084F2F7 /* Int + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86E67AA297435660084F2F7 /* Int + Extensions.swift */; };
@@ -51,6 +54,9 @@
 		D80913B3296EF49F00359B52 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		D86303C829754E950054C3F9 /* StatisticTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticTableViewCell.swift; sourceTree = "<group>"; };
 		D86303CA297554470054C3F9 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		D86303CD297589A90054C3F9 /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
+		D86303CF297596E50054C3F9 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		D86303D32975C0C20054C3F9 /* GalleryOrPhotoAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryOrPhotoAlert.swift; sourceTree = "<group>"; };
 		D86E67A62973FD270084F2F7 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		D86E67A829742D9C0084F2F7 /* TimerWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerWorkoutViewController.swift; sourceTree = "<group>"; };
 		D86E67AA297435660084F2F7 /* Int + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int + Extensions.swift"; sourceTree = "<group>"; };
@@ -107,6 +113,14 @@
 			path = StatisticVC;
 			sourceTree = "<group>";
 		};
+		D86303CC2975898D0054C3F9 /* ProfileVC */ = {
+			isa = PBXGroup;
+			children = (
+				D86303CD297589A90054C3F9 /* ProfileCollectionViewCell.swift */,
+			);
+			path = ProfileVC;
+			sourceTree = "<group>";
+		};
 		D86E67AC297435B20084F2F7 /* TimerWorkoutVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +152,7 @@
 				D87CCFF229718610000D5F1D /* SimpleAlert.swift */,
 				D8BD02D12972BAFA00E35071 /* OkCancelAlert.swift */,
 				D86E67A62973FD270084F2F7 /* CustomAlert.swift */,
+				D86303D32975C0C20054C3F9 /* GalleryOrPhotoAlert.swift */,
 			);
 			path = Alerts;
 			sourceTree = "<group>";
@@ -210,6 +225,7 @@
 				D8BD02CF2972B76100E35071 /* RepsWorkoutViewController.swift */,
 				D87CCFE32971352F000D5F1D /* StatisticViewController.swift */,
 				D86E67A829742D9C0084F2F7 /* TimerWorkoutViewController.swift */,
+				D86303CF297596E50054C3F9 /* SettingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -226,6 +242,7 @@
 		D8C3776F296E97DD00408CFB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D86303CC2975898D0054C3F9 /* ProfileVC */,
 				D86303C729754E720054C3F9 /* StatisticVC */,
 				D86E67AC297435B20084F2F7 /* TimerWorkoutVC */,
 				D8BD02CC2972B57400E35071 /* StartWorkoutVC */,
@@ -372,6 +389,7 @@
 				D87CCFE22971339C000D5F1D /* MainTabBarController.swift in Sources */,
 				D8C37781296EAF7900408CFB /* CalendarView.swift in Sources */,
 				D8C37779296E9B1800408CFB /* UIStackView + Extensions.swift in Sources */,
+				D86303D42975C0C20054C3F9 /* GalleryOrPhotoAlert.swift in Sources */,
 				D86E67A929742D9C0084F2F7 /* TimerWorkoutViewController.swift in Sources */,
 				D8BD02D429733C2500E35071 /* Date + Extensions.swift in Sources */,
 				D8BD02D02972B76100E35071 /* RepsWorkoutViewController.swift in Sources */,
@@ -383,10 +401,12 @@
 				D80913B2296EEEAC00359B52 /* WorkoutTableViewCell.swift in Sources */,
 				D87CCFF0297155CC000D5F1D /* StorageManager.swift in Sources */,
 				D8C37777296E9AFB00408CFB /* UIColor + Extensions.swift in Sources */,
+				D86303CE297589A90054C3F9 /* ProfileCollectionViewCell.swift in Sources */,
 				D8C377A3296ED2B200408CFB /* CalendarCollectionViewCell.swift in Sources */,
 				D878618929707172004F112E /* RepsOrTimerView.swift in Sources */,
 				D86303CB297554470054C3F9 /* UserModel.swift in Sources */,
 				D8C37758296E925800408CFB /* AppDelegate.swift in Sources */,
+				D86303D0297596E50054C3F9 /* SettingViewController.swift in Sources */,
 				D878618429706B65004F112E /* NewWorkoutViewController.swift in Sources */,
 				D8C3775A296E925800408CFB /* SceneDelegate.swift in Sources */,
 				D80913B4296EF49F00359B52 /* WeatherView.swift in Sources */,

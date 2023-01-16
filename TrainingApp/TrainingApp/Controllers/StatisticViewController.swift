@@ -122,11 +122,12 @@ class StatisticViewController: UIViewController {
     }
     
     private func getDifferenceModel(dateStart: Date) {
-        _ = Date()
         let nameArray = storageManager.getWorkoutsName()
         
         for name in nameArray {
-            let workoutArray = storageManager.getWorkouts(name: name, dateStart: dateStart)
+            let dateEnd = Date().localDate()
+            let predicateDifference = NSPredicate(format: "workoutName = '\(name)' AND workoutDate BETWEEN %@", [dateStart, dateEnd])
+            let workoutArray = storageManager.getWorkouts(predicate: predicateDifference, name: "workoutDate")
 
             guard let last = workoutArray.last?.workoutReps,
                   let first = workoutArray.first?.workoutReps else {

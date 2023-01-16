@@ -69,7 +69,6 @@ class CustomAlert {
                                  y: editingLabel.frame.maxY + 10,
                                  width: alertView.frame.width - 60,
                                  height: 20)
-        alertView.addSubview(setsLabel)
         
         setsTextField.frame = CGRect(x: 20,
                                      y: setsLabel.frame.maxY,
@@ -85,7 +84,6 @@ class CustomAlert {
         setsTextField.clearButtonMode = .always
         setsTextField.returnKeyType = .done
         setsTextField.keyboardType = .numberPad
-        alertView.addSubview(setsTextField)
         
         let repsOrTimerLabel = UILabel(text: "\(repsOrTimer)")
         repsOrTimerLabel.translatesAutoresizingMaskIntoConstraints = true
@@ -93,7 +91,6 @@ class CustomAlert {
                                         y: setsTextField.frame.maxY + 3,
                                         width: alertView.frame.width - 60,
                                         height: 20)
-        alertView.addSubview(repsOrTimerLabel)
         
         repsTextField.frame = CGRect(x: 20,
                                      y: repsOrTimerLabel.frame.maxY,
@@ -109,7 +106,6 @@ class CustomAlert {
         repsTextField.clearButtonMode = .always
         repsTextField.returnKeyType = .done
         repsTextField.keyboardType = .numberPad
-        alertView.addSubview(repsTextField)
         
         let okButton = UIButton(frame: CGRect(x: 50,
                                               y: repsTextField.frame.maxY + 15,
@@ -121,8 +117,11 @@ class CustomAlert {
         okButton.titleLabel?.font = .robotoMedium18()
         okButton.layer.cornerRadius = 10
         okButton.addTarget(self, action: #selector(dismissAlert), for: .touchUpInside)
-        alertView.addSubview(okButton)
-        
+        alertView.addSubviews(okButton,
+                              repsTextField,
+                              repsOrTimerLabel,
+                              setsTextField,
+                              setsLabel)
         buttonAction = completion
         
         UIView.animate(withDuration: 0.3) {

@@ -8,6 +8,7 @@ import RealmSwift
 import Foundation
 
 typealias WorkoutArray = Results<WorkoutModel>
+typealias UserArray = Results<UserModel>
 
 class StorageManager {
     static let shared = StorageManager()
@@ -47,10 +48,8 @@ class StorageManager {
         
     }
     
-    func getWorkouts(name: String, dateStart: Date) -> WorkoutArray {
-        let dateEnd = Date().localDate()
-        let predicateDifference = NSPredicate(format: "workoutName = '\(name)' AND workoutDate BETWEEN %@", [dateStart, dateEnd])
-        return realm.objects(WorkoutModel.self).filter(predicateDifference).sorted(byKeyPath: "workoutDate")
+    func getWorkouts(predicate: NSPredicate, name: String) -> WorkoutArray {
+        realm.objects(WorkoutModel.self).filter(predicate).sorted(byKeyPath: name)
     }
     
     func saveWorkoutModel(model: WorkoutModel) {
@@ -97,8 +96,6 @@ class StorageManager {
         return nameArray
     }
     
-    //UserModel
-    
     func saveUserModel(model: UserModel) {
        write {
             realm.add(model)
@@ -116,5 +113,9 @@ class StorageManager {
             users[0].userTarget = model.userTarget
             users[0].userImage = model.userImage
         }
+    }
+    
+    func getUserArray() -> UserArray {
+        realm.objects(UserModel.self)
     }
 }
