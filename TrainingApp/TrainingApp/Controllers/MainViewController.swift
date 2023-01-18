@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class MainViewController: UIViewController {
     
@@ -84,7 +85,7 @@ class MainViewController: UIViewController {
     
     private let storageManager = StorageManager.shared
     private var workoutArray: WorkoutArray?
-    
+    private let locationManager = CLLocationManager()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,6 +94,19 @@ class MainViewController: UIViewController {
         workoutArray = storageManager.getWorkouts(date: Date())
         calendarView.delegate = self
         checkWorkoutsToday()
+        setupLocation()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupUserParameters()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        showOnboarding()
     }
     
     private func setupTableView() {
@@ -153,6 +167,24 @@ class MainViewController: UIViewController {
         ])
     }
     
+    private func setupLocation() {
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
+        locationManager.requestLocation()
+    }
+    
+    private func setupUserParameters() {
+        let userArray = storageManager.getUserArray()
+        if !userArray.isEmpty {
+            userNameLabel.text = userArray[0].userFirstName + " " + userArray[0].userSecondName
+            
+            guard let data = userArray[0].userImage else { return }
+            guard let image = UIImage(data: data) else { return }
+            avatarImageView.image = image
+        }
+    }
+    
     private func checkWorkoutsToday() {
         if let workoutArray,
            workoutArray.isEmpty {
@@ -162,6 +194,16 @@ class MainViewController: UIViewController {
             tableView.isHidden = false
             noWorkoutImageView.isHidden = true
             tableView.reloadData()
+        }
+    }
+    
+    private func showOnboarding() {
+        let userDefaults = UserDefaults.standard
+        let onBoardingWasViewed = userDefaults.bool(forKey: "OnBoardingWasViewed")
+        if onBoardingWasViewed == false {
+            let onboardingViewController = OnboardingViewController()
+            onboardingViewController.modalPresentationStyle = .fullScreen
+            present(onboardingViewController, animated: false)
         }
     }
     
@@ -255,3 +297,40 @@ extension MainViewController: CalendarViewDelegate {
     }
 }
 
+extension MainViewController: CLLocationManagerDelegate {
+    // MARK: - CLLocationManagerDelegate
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            locationManager.stopUpdatingLocation()
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            getWeather(lat: Double(lat), lon: Double(lon))
+            
+        }
+    }
+    
+    private func getWeather(lat: Double, lon: Double) {
+        NetworkDataFetch.shared.fetchWeather(lat: lat, lon: lon) { [weak self] model, error in
+            guard let self = self else { return }
+            if error == nil {
+                guard let model = model else {
+                    return
+                }
+                self.weatherView.weatherStatusLabel.text = "\(model.currently.iconLocal) \(model.currently.temperatureCelsius)°C"
+                self.weatherView.weatherDescriptionLabel.text = model.currently.description
+                
+                guard let imageIcon = model.currently.icon else {
+                    return
+                }
+                self.weatherView.weatherImageView.image = UIImage(named: imageIcon)
+            } else {
+                self.alertOk(title: "Error", message: "No weather data")
+            }
+        }
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+}

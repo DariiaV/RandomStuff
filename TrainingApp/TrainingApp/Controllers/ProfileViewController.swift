@@ -16,10 +16,7 @@ struct ResultWorkout {
 class ProfileViewController: UIViewController {
     
     private let storageManager = StorageManager.shared
-    private var userArray: UserArray?
-    
     private var resultWorkout = [ResultWorkout]()
-    
     private let idProfileCollectionViewCell = "Cell"
     
     private let profileLabel: UILabel = {
@@ -93,54 +90,12 @@ class ProfileViewController: UIViewController {
         return collectionVIew
     }()
     
-    private let targetLabel: UILabel = {
-        let label = UILabel()
-        label.text = "TARGET: 0 workouts"
-        label.font = .robotoBold16()
-        label.textColor = .specialGray
-        return label
-    }()
-    
     private let workoutsNowLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
         label.font = .robotoBold24()
         label.textColor = .specialGray
         return label
-    }()
-    
-    private let workoutsTargetLabel: UILabel = {
-        let label = UILabel()
-        label.text = "0"
-        label.font = .robotoBold24()
-        label.textColor = .specialGray
-        return label
-    }()
-    
-    private let targetView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 15
-        view.backgroundColor = .specialBrown
-        return view
-    }()
-    
-    private let progressView: UIProgressView = {
-        let progressView = UIProgressView(progressViewStyle: .bar)
-        progressView.trackTintColor = .specialBrown
-        progressView.progressTintColor = .specialGreen
-        progressView.layer.cornerRadius = 14
-        progressView.clipsToBounds = true
-        progressView.setProgress(0, animated: false)
-        progressView.layer.sublayers?[1].cornerRadius = 14
-        progressView.subviews[1].clipsToBounds = true
-        return progressView
-    }()
-    
-    private var targetStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 10
-        return stackView
     }()
     
     private var userParamStackView: UIStackView = {
@@ -153,18 +108,16 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        userArray = storageManager.getUserArray()
-        
         setupViews()
         setDelegates()
-        getWorkoutResults()
         setupUserParameters()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setupUserParameters()
+        getWorkoutResults()
+        collectionView.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -180,14 +133,9 @@ class ProfileViewController: UIViewController {
                          userNameLabel,
                          userParamStackView,
                          editingButton,
-                         collectionView,
-                         targetLabel,
-                         targetStackView,
-                         targetView,
-                         progressView)
+                         collectionView)
         
         userParamStackView.addArrangedSubviews(userHeightLabel, userWeightLabel)
-        targetStackView.addArrangedSubviews(workoutsNowLabel, workoutsTargetLabel)
         collectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: idProfileCollectionViewCell)
         
         NSLayoutConstraint.activate([
@@ -218,24 +166,7 @@ class ProfileViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: userParamStackView.bottomAnchor, constant: 20),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            collectionView.heightAnchor.constraint(equalToConstant: 250),
-            
-            targetLabel.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 30),
-            targetLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            
-            targetStackView.topAnchor.constraint(equalTo: targetLabel.bottomAnchor, constant: 10),
-            targetStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            targetStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            
-            targetView.topAnchor.constraint(equalTo: targetStackView.bottomAnchor, constant: 3),
-            targetView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            targetView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            targetView.heightAnchor.constraint(equalToConstant: 28),
-            
-            progressView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 20),
-            progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            progressView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            progressView.heightAnchor.constraint(equalToConstant: 28)
+            collectionView.heightAnchor.constraint(equalToConstant: 250)
         ])
     }
     
@@ -247,30 +178,26 @@ class ProfileViewController: UIViewController {
     @objc private func editingButtonTap() {
         let settingViewController = SettingViewController()
         settingViewController.modalPresentationStyle = .fullScreen
+        settingViewController.delegate = self
         present(settingViewController, animated: true)
     }
     
     private func setupUserParameters() {
-        guard let userArray = userArray else {
-            return
-        }
-        
+        let userArray = storageManager.getUserArray()
         if !userArray.isEmpty {
             userNameLabel.text = userArray[0].userFirstName + userArray[0].userSecondName
             userHeightLabel.text = "Height: \(userArray[0].userHeight)"
             userWeightLabel.text = "Weight: \(userArray[0].userWeight)"
-            targetLabel.text = "TARGET: \(userArray[0].userTarget) workouts"
-            workoutsTargetLabel.text = "\(userArray[0].userTarget)"
             
             guard let data = userArray[0].userImage else { return }
             guard let image = UIImage(data: data) else { return }
             avatarImageView.image = image
         }
     }
-
+    
     private func getWorkoutResults() {
         let nameArray = storageManager.getWorkoutsName()
-        
+        var newWorkout = [ResultWorkout]()
         for name in nameArray {
             let predicateName = NSPredicate(format: "workoutName = '\(name)'")
             let workoutArray = storageManager.getWorkouts(predicate: predicateName, name: "workoutName")
@@ -282,8 +209,9 @@ class ProfileViewController: UIViewController {
                 image = model.workoutImage
             }
             let resultModel = ResultWorkout(name: name, result: result, imageData: image)
-            resultWorkout.append(resultModel)
+            newWorkout.append(resultModel)
         }
+        resultWorkout = newWorkout
     }
 }
 
@@ -314,8 +242,10 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         5
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        progressView.setProgress(0.6, animated: true)
+}
+
+extension ProfileViewController: SettingViewControllerDelegate {
+    func saveUserModel() {
+        setupUserParameters()
     }
 }

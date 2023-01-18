@@ -9,16 +9,15 @@ import UIKit
 
 class WeatherView: UIView {
     
-    private let weatherStatusLabel: UILabel = {
+    let weatherStatusLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sunny"
         label.font = .robotoMedium18()
         label.textColor = .specialGray
         label.textAlignment = .left
         return label
     }()
     
-    private let weatherDescriptionLabel: UILabel = {
+    let weatherDescriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Nice weather to work out outside"
         label.font = .robotoMedium14()
@@ -28,9 +27,8 @@ class WeatherView: UIView {
         return label
     }()
     
-    private let weatherImageView: UIImageView = {
+    let weatherImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "Sun")
         image.contentMode = .scaleAspectFit
         return image
     }()

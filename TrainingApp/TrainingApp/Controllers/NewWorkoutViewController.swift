@@ -20,8 +20,16 @@ class NewWorkoutViewController: UIViewController {
     private let storageManager = StorageManager.shared
     private var workoutModel = WorkoutModel()
     
-    private let testImage = UIImage(named: "imageCell")
+    private var currentImageTag: Int?
+    private let imagesWorkout = [#imageLiteral(resourceName: "workoutTwo"), #imageLiteral(resourceName: "workoutOne"), #imageLiteral(resourceName: "workoutThree"), #imageLiteral(resourceName: "workoutFour")]
+    private var workoutButtons = [UIButton]()
     private let nameLabel = UILabel(text: "Name")
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.bounces = false
+        scrollView.delaysContentTouches = false
+        return scrollView
+    }()
     
     private let newWorkoutLabel: UILabel = {
         let label = UILabel()
@@ -80,29 +88,44 @@ class NewWorkoutViewController: UIViewController {
         return button
     }()
     
+    private let imageButtonsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = 10
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         nameTextField.delegate = self
         setupViews()
         addTaps()
+        createImageButtons()
     }
     
     private func setupViews() {
         view.backgroundColor = .specialBackground
+        view.addSubviews(scrollView)
         
-        view.addSubviews(newWorkoutLabel,
-                         closeButton,
-                         nameLabel,
-                         nameTextField,
-                         dateAndRepeatLabel,
-                         dateAndRepeatView,
-                         repsOrTimerLabel,
-                         repsOrTimerView,
-                         saveButton)
+        scrollView.addSubviews(newWorkoutLabel,
+                               closeButton,
+                               nameLabel,
+                               nameTextField,
+                               dateAndRepeatLabel,
+                               dateAndRepeatView,
+                               repsOrTimerLabel,
+                               repsOrTimerView,
+                               saveButton,
+                               imageButtonsStackView)
         
         NSLayoutConstraint.activate([
-            newWorkoutLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            
+            newWorkoutLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
             newWorkoutLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             closeButton.centerYAnchor.constraint(equalTo: newWorkoutLabel.centerYAnchor),
@@ -126,7 +149,7 @@ class NewWorkoutViewController: UIViewController {
             dateAndRepeatView.topAnchor.constraint(equalTo: dateAndRepeatLabel.bottomAnchor, constant: 3),
             dateAndRepeatView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             dateAndRepeatView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            dateAndRepeatView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2),
+            dateAndRepeatView.heightAnchor.constraint(equalToConstant: 94),
             
             repsOrTimerLabel.topAnchor.constraint(equalTo: dateAndRepeatView.bottomAnchor, constant: 20),
             repsOrTimerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
@@ -137,11 +160,40 @@ class NewWorkoutViewController: UIViewController {
             repsOrTimerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             repsOrTimerView.heightAnchor.constraint(equalToConstant: 320),
             
-            saveButton.topAnchor.constraint(equalTo: repsOrTimerView.bottomAnchor, constant: 20),
+            imageButtonsStackView.topAnchor.constraint(equalTo: repsOrTimerView.bottomAnchor, constant: 10),
+            imageButtonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            imageButtonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            imageButtonsStackView.heightAnchor.constraint(equalToConstant: 50),
+            
+            saveButton.topAnchor.constraint(equalTo: imageButtonsStackView.bottomAnchor, constant: 20),
             saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            saveButton.heightAnchor.constraint(equalToConstant: 55)
+            saveButton.heightAnchor.constraint(equalToConstant: 55),
+            saveButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20)
         ])
+    }
+    
+    private func createImageButtons() {
+        
+        
+        for (index, image) in imagesWorkout.enumerated() {
+            let button = UIButton()
+            button.setImage(image, for: .normal)
+            button.contentMode = .scaleAspectFit
+            workoutButtons.append(button)
+            button.backgroundColor = .specialGreen
+            button.layer.cornerRadius = 15
+            button.tag = index
+            button.alpha = 0.5
+            button.addTarget(self, action: #selector(workoutButtonTapped(_:)), for: .touchUpInside)
+        }
+        imageButtonsStackView.addArrangedSubviews(workoutButtons)
+    }
+    
+    @objc private func workoutButtonTapped(_ selector: UIButton) {
+        workoutButtons.forEach { $0.alpha = 0.5}
+        currentImageTag = selector.tag
+        selector.alpha = 1
     }
     
     private func addTaps() {
@@ -152,8 +204,6 @@ class NewWorkoutViewController: UIViewController {
         let swipeScreen = UISwipeGestureRecognizer(target: self, action: #selector(swipeHideKeyboard))
         swipeScreen.cancelsTouchesInView = false
         view.addGestureRecognizer(swipeScreen)
-        
-        
     }
     
     private func setModel() {
@@ -169,8 +219,11 @@ class NewWorkoutViewController: UIViewController {
         workoutModel.workoutReps = Int(repsOrTimerView.repsSlider.value)
         workoutModel.workoutTimer = Int(repsOrTimerView.timerSlider.value)
         
-        guard let imageData = testImage?.pngData() else { return }
-        workoutModel.workoutImage = imageData
+        if let currentImageTag,
+           let imageData = imagesWorkout[currentImageTag].pngData() {
+            workoutModel.workoutImage = imageData
+        }
+        
     }
     
     
@@ -180,6 +233,7 @@ class NewWorkoutViewController: UIViewController {
         
         if count != 0 && workoutModel.workoutSets != 0 && (workoutModel.workoutReps != 0 || workoutModel.workoutTimer != 0) {
             storageManager.saveWorkoutModel(model: workoutModel)
+            createNotification()
             alertOk(title: "Success", message: nil)
             refreshWorkoutObjects()
         } else {
@@ -197,7 +251,16 @@ class NewWorkoutViewController: UIViewController {
         repsOrTimerView.repsSlider.value = 0
         repsOrTimerView.numberOfTimerLabel.text = "0"
         repsOrTimerView.timerSlider.value = 0
+        currentImageTag = nil
+        workoutButtons.forEach { $0.alpha = 0.5 }
         workoutModel = WorkoutModel()
+    }
+    
+    private func createNotification() {
+        let notifications = Notifications()
+        let stringDate = workoutModel.workoutDate.ddMMyyyyFromDate()
+        print(workoutModel.workoutDate)
+        notifications.scheduleDateNotification(date: workoutModel.workoutDate, id: "workout" + stringDate)
     }
     
     @objc private func closeButtonTapped() {

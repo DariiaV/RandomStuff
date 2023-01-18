@@ -25,13 +25,14 @@ class WorkoutTableViewCell: UITableViewCell {
     
     private let workoutBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .specialBackground
+        view.backgroundColor = .specialGreen
         view.layer.cornerRadius = 20
         return view
     }()
     
     private let workoutImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.backgroundColor = .specialGreen
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()

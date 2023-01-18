@@ -7,7 +7,14 @@
 
 import UIKit
 
+
+protocol SettingViewControllerDelegate: AnyObject {
+    func saveUserModel()
+}
+
 class SettingViewController: UIViewController {
+    
+    weak var delegate: SettingViewControllerDelegate?
     
     private let storageManager = StorageManager.shared
     private var userArray: UserArray?
@@ -178,7 +185,7 @@ class SettingViewController: UIViewController {
     }
     
     @objc private func closeButtonTapped() {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
     
     @objc private func saveButtonTapped() {
@@ -192,7 +199,9 @@ class SettingViewController: UIViewController {
             storageManager.updateUserModel(model: userModel)
             
         }
-        userModel = UserModel()
+        
+        delegate?.saveUserModel()
+        dismiss(animated: true)
     }
     
     private func loadUserInfo() {
