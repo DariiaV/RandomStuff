@@ -12,7 +12,7 @@ class MainViewController: UIViewController {
     
     private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "123")
+        imageView.image = UIImage()
         imageView.clipsToBounds = true
         imageView.backgroundColor = UIColor(named: "PhotoBack")
         imageView.layer.borderWidth = 5

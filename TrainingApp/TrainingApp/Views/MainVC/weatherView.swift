@@ -29,6 +29,7 @@ class WeatherView: UIView {
     
     let weatherImageView: UIImageView = {
         let image = UIImageView()
+        image.image = UIImage(named: "cloudy")
         image.contentMode = .scaleAspectFit
         return image
     }()
@@ -57,7 +58,7 @@ class WeatherView: UIView {
             
             weatherStatusLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             weatherStatusLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            weatherStatusLabel.trailingAnchor.constraint(equalTo: weatherImageView.leadingAnchor, constant: 10),
+            weatherStatusLabel.trailingAnchor.constraint(equalTo: weatherImageView.leadingAnchor, constant: -10),
             weatherStatusLabel.heightAnchor.constraint(equalToConstant: 20),
             
             weatherDescriptionLabel.topAnchor.constraint(equalTo: weatherStatusLabel.bottomAnchor, constant: 0),
