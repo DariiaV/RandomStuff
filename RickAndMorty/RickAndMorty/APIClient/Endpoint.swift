@@ -6,7 +6,7 @@
 //
 
 import Foundation
-// MARK: - Represents unique API endpoint
+/// Represents unique API endpoint
 @frozen enum Endpoint: String {
     case character //endpoint to get character info
     case location //endpoint to get location info
