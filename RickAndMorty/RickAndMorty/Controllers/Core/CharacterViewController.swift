@@ -20,6 +20,7 @@ final class CharacterViewController: UIViewController {
     }
     
     private func setupViews() {
+        characterListView.delegate = self
         view.backgroundColor = .systemBackground
         view.addSubviews(characterListView)
         
@@ -31,4 +32,15 @@ final class CharacterViewController: UIViewController {
         ])
     }
     
+}
+
+extension CharacterViewController: CharacterListViewDelegate {
+    // MARK: - CharacterListViewDelegate
+    func characterListView(_ characterListView: CharacterListView, didSelectCharacter character: Character) {
+        //Open detail controller for that character
+        let viewModel = CharacterDetailViewViewModel(character: character)
+        let detailVC = CharacterDetailViewController(viewModel: viewModel)
+        detailVC.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
