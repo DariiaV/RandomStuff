@@ -89,10 +89,10 @@ final class CharacterListViewViewModel: NSObject {
                 strongSelf.characters.append(contentsOf: moreResults)
                 DispatchQueue.main.async {
                     strongSelf.delegate?.didLoadMoreCharacters(with: indexPathsToAdd)
-                   // strongSelf.isLoadingMoreCharacters = false
+                    strongSelf.isLoadingMoreCharacters = false
                 }
             case .failure(let failure):
-                 print(String(describing: failure))
+                print(String(describing: failure))
                 self?.isLoadingMoreCharacters = false
             }
         }

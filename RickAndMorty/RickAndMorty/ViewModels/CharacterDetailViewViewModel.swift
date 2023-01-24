@@ -11,8 +11,22 @@ final class CharacterDetailViewViewModel {
     
     private let character: Character
     
+    enum SectionType: CaseIterable {
+        case photo
+        case information
+        case episodes
+    }
+    
+    let sections = SectionType.allCases
+    
+    // MARK: - Init
+    
     init(character: Character) {
         self.character = character
+    }
+    
+    private var requestUrl: URL? {
+        return URL(string: character.url)
     }
     
     var title: String {
