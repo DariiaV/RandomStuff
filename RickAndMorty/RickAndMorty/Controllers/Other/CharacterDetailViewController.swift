@@ -78,13 +78,11 @@ extension CharacterDetailViewController: UICollectionViewDelegate, UICollectionV
                 return UICollectionViewCell()
             }
             cell.configure(with: viewModel)
-            cell.backgroundColor = .systemYellow
             return cell
         case .information(let viewModels):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterInfoCollectionViewCell.cellIdentifier, for: indexPath) as? CharacterInfoCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.backgroundColor = .systemRed
             cell.configure(with: viewModels[indexPath.row])
             return cell
             
@@ -92,8 +90,8 @@ extension CharacterDetailViewController: UICollectionViewDelegate, UICollectionV
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterEpisodeCollectionViewCell.cellIdentifier, for: indexPath) as? CharacterEpisodeCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.backgroundColor = .systemOrange
-            cell.configure(with: viewModels[indexPath.row])
+            let viewModel = viewModels[indexPath.row]
+            cell.configure(with: viewModel)
             return cell
         }
     }
