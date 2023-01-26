@@ -10,10 +10,11 @@ import UIKit
 final class EpisodeDetailViewController: UIViewController {
     
     private let viewModel: EpisodeDetailViewViewModel
+    private let detailView = EpisodeDetailView()
     
     // MARK: - Init
     init(url: URL?) {
-        self.viewModel = .init(endpointUrl: url)
+        self.viewModel = EpisodeDetailViewViewModel(endpointUrl: url)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -25,6 +26,37 @@ final class EpisodeDetailViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Episode"
-        view.backgroundColor = .systemGreen
+        setUpView()
+        setUpNavigationItem()
+        viewModel.delegate = self
+        viewModel.fetchEpisodeData()
     }
+    
+    private func setUpView() {
+        view.addSubviews(detailView)
+        
+        NSLayoutConstraint.activate([
+            detailView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            detailView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            detailView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            detailView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    private func setUpNavigationItem() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
+    }
+    
+    @objc private func didTapShare() {
+        
+    }
+}
+
+extension EpisodeDetailViewController: EpisodeDetailViewViewModelDelegate {
+    // MARK: - EpisodeDetailViewViewModelDelegate
+    func didFetchEpisodeDetails() {
+        detailView.configure(with: viewModel)
+    }
+    
+    
 }
