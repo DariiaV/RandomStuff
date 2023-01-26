@@ -13,7 +13,7 @@ final class Request {
         static let baseUrl = "https://rickandmortyapi.com/api"
     }
     ///Desired endpoint
-    private let endpoint: Endpoint
+    let endpoint: Endpoint
     ///Path components for API, if any
     private let pathComponents: [String]
     ///Query arguments for API, if any
