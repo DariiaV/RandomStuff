@@ -26,8 +26,11 @@ final class CharacterListView: UIView {
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(CharacterCollectionViewCell.self, forCellWithReuseIdentifier: CharacterCollectionViewCell.cellIdentifier)
-        collectionView.register(FooterLoadingCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: FooterLoadingCollectionReusableView.identifier)
+        collectionView.register(CharacterCollectionViewCell.self,
+                                forCellWithReuseIdentifier: CharacterCollectionViewCell.cellIdentifier)
+        collectionView.register(FooterLoadingCollectionReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                withReuseIdentifier: FooterLoadingCollectionReusableView.identifier)
         collectionView.isHidden = true
         collectionView.alpha = 0
         return collectionView

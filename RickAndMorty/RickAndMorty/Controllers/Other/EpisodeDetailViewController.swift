@@ -29,6 +29,7 @@ final class EpisodeDetailViewController: UIViewController {
         setUpView()
         setUpNavigationItem()
         viewModel.delegate = self
+        detailView.delegate = self
         viewModel.fetchEpisodeData()
     }
     
@@ -57,6 +58,14 @@ extension EpisodeDetailViewController: EpisodeDetailViewViewModelDelegate {
     func didFetchEpisodeDetails() {
         detailView.configure(with: viewModel)
     }
-    
-    
+}
+
+extension EpisodeDetailViewController: EpisodeDetailViewDelegate {
+    // MARK: - EpisodeDetailViewDelegate
+    func rmEpisodeDetailView(_ detailView: EpisodeDetailView, didSelect character: Character) {
+        let vc = CharacterDetailViewController(viewModel: .init(character: character))
+        vc.title = character.name
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }

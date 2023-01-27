@@ -16,8 +16,9 @@ final class EpisodeDetailViewViewModel {
     weak var delegate: EpisodeDetailViewViewModelDelegate?
     
     private let endpointUrl: URL?
-    private var dataTuple: (Episode, [Character])? {
+    private var dataTuple: (episode: Episode, characters: [Character])? {
         didSet {
+            createCellViewModels()
             delegate?.didFetchEpisodeDetails()
         }
     }
@@ -27,7 +28,7 @@ final class EpisodeDetailViewViewModel {
         case characters(viewModels: [CharacterCollectionViewCellViewModel])
     }
     
-    public private(set) var sections: [SectionType] = []
+    public private(set) var cellViewModels: [SectionType] = []
     
     // MARK: - Init
     init(endpointUrl: URL?) {
@@ -46,6 +47,41 @@ final class EpisodeDetailViewViewModel {
                 break
             }
         }
+    }
+    
+    func character(at index: Int) -> Character? {
+        guard let dataTuple = dataTuple else {
+            return nil
+        }
+        return dataTuple.characters[index]
+    }
+    
+    private func createCellViewModels() {
+        guard let dataTuple = dataTuple else {
+            return
+        }
+        let episode = dataTuple.episode
+        let characters = dataTuple.characters
+        var createdString = episode.created
+        if let date = CharacterInfoCollectionViewCellViewModel.dateFormatter.date(from: episode.created) {
+            createdString = CharacterInfoCollectionViewCellViewModel.shortDateFormatter.string(from: date)
+        }
+        
+        cellViewModels = [
+            .information(viewModels: [
+                .init(title: "Episode Name", value: episode.name),
+                .init(title: "Air Date", value: episode.air_date),
+                .init(title: "Episode", value: episode.episode),
+                .init(title: "Created", value: createdString),
+            ]),
+            .characters(viewModels: characters.compactMap({ character in
+                return CharacterCollectionViewCellViewModel(
+                    characterName: character.name,
+                    characterStatus: character.status,
+                    characterImageUrl: URL(string: character.image))
+            }))
+        
+        ]
     }
     
     private func fetchRelatedCharacters(episode: Episode) {
@@ -72,7 +108,7 @@ final class EpisodeDetailViewViewModel {
             }
         }
         group.notify(queue: .main) {
-            self.dataTuple = (episode, characters)
+            self.dataTuple = (episode: episode, characters: characters)
         }
     }
 }
