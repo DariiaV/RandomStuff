@@ -20,11 +20,22 @@ struct SettingsView: View {
                 if let image = viewModel.image {
                     Image(uiImage: image)
                         .resizable()
+                        .renderingMode(.template)
+                        .foregroundColor(Color.white)
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .padding()
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(Color.red)
+                        .padding(8)
+                        .background(Color(viewModel.iconContainerColor))
+                        .cornerRadius(6)
                 }
                 Text(viewModel.title)
+                    .padding(.leading, 10)
+                Spacer()
+            }
+            .padding(.bottom, 3)
+            .onTapGesture {
+                viewModel.onTapHandler(viewModel.type)
             }
         }
     }
@@ -33,7 +44,8 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView(viewModel: .init(cellViewModels: SettingsOption.allCases.compactMap({
-            return SettingCellViewModel(type: $0)
+            return SettingCellViewModel(type: $0) { option in
+            }
         })))
     }
 }

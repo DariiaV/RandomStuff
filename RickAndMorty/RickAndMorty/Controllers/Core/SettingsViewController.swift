@@ -9,9 +9,7 @@ import UIKit
 
 final class SettingsViewController: UIViewController {
     
-    private let settingSwiftUIController = UIHostingController(rootView: SettingsView(viewModel: SettingsViewViewModel(cellViewModels: SettingsOption.allCases.compactMap({
-        return SettingCellViewModel(type: $0)
-    }))))
+    private var settingSwiftUIController: UIHostingController<SettingsView>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +20,11 @@ final class SettingsViewController: UIViewController {
     }
     
     private func addSwiftUIController() {
+        let settingSwiftUIController = UIHostingController(rootView: SettingsView(viewModel: SettingsViewViewModel(cellViewModels: SettingsOption.allCases.compactMap({
+            return SettingCellViewModel(type: $0) { [weak self] option in
+                self?.handleTap(option: option)
+            }
+        }))))
         addChild(settingSwiftUIController)
         settingSwiftUIController.didMove(toParent: self)
         view.addSubview(settingSwiftUIController.view)
@@ -32,8 +35,15 @@ final class SettingsViewController: UIViewController {
             settingSwiftUIController.view.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             settingSwiftUIController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+        
+        self.settingSwiftUIController = settingSwiftUIController
     }
     
-    
+    private func handleTap(option: SettingsOption) {
+        guard Thread.current.isMainThread else {
+            return
+        }
+        
+    }
     
 }
