@@ -15,9 +15,12 @@ final class LocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        primaryView.delegate = self
         title = "Locations"
         addSearchButton()
         setUpViews()
+        viewModel.delegate = self
+        viewModel.fetchLocations()
     }
     
     private func addSearchButton() {
@@ -39,4 +42,22 @@ final class LocationViewController: UIViewController {
     @objc private func didTapSearch() {
         
     }
+}
+
+extension LocationViewController: LocationViewViewModelDelegate {
+    // MARK: - LocationViewViewModelDelegate
+    func didFetchInitialLocations() {
+        primaryView.configure(with: viewModel)
+    }
+}
+
+extension LocationViewController: LocationViewDelegate {
+    // MARK: - LocationViewDelegate
+    func locationView(_ locationView: LocationView, didSelect location: Location) {
+        let vc = LocationDetailViewController(location: location)
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
 }
