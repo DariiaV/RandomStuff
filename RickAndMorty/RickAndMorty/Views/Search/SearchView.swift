@@ -14,18 +14,31 @@ final class SearchView: UIView {
     // MARK: - Subviews
     
     ///SearchInputView(bar, selection buttons)
-    ///No results view
+    
+    private let noResultsView = NoSearchResultsView()
     ///Results collectionView
     
     // MARK: - Init
     init(frame: CGRect, viewModel: SearchViewViewModel) {
         self.viewModel = viewModel
         super.init(frame: frame)
-        backgroundColor = .red
+        backgroundColor = .systemBackground
+        setUpViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setUpViews() {
+        addSubviews(noResultsView)
+        
+        NSLayoutConstraint.activate([
+            noResultsView.widthAnchor.constraint(equalToConstant: 150),
+            noResultsView.heightAnchor.constraint(equalToConstant: 150),
+            noResultsView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            noResultsView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
 }
 
