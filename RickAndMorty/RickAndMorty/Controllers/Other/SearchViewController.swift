@@ -8,18 +8,30 @@
 import UIKit
 ///Configurable controller to search
 final class SearchViewController: UIViewController {
-    
+    ///Configuration for search sessoin
     struct Config {
         enum `Type` {
             case character
             case episode
             case location
+            
+            var title: String {
+                switch self {
+                case .character:
+                    return "Search Characters"
+                case .episode:
+                    return "Search Episode"
+                case .location:
+                    return "Search Location"
+                }
+            }
         }
         let type: `Type`
     }
     
     private let config: Config
     
+    // MARK: - Init
     init(config: Config) {
         self.config = config
         super.init(nibName: nil, bundle: nil)
@@ -29,10 +41,11 @@ final class SearchViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Search"
+        title = config.type.title
         view.backgroundColor = .systemBackground
     }
 }

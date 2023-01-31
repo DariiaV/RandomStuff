@@ -10,6 +10,12 @@
 		D83B130A297A99D60003101F /* GetAllCharactersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83B1309297A99D60003101F /* GetAllCharactersResponse.swift */; };
 		D83B130C297ABB4C0003101F /* CharacterListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83B130B297ABB4C0003101F /* CharacterListViewViewModel.swift */; };
 		D83B130E297ABC500003101F /* CharacterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83B130D297ABC500003101F /* CharacterListView.swift */; };
+		D863DA1C2988FFF600903D41 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863DA1B2988FFF600903D41 /* SearchView.swift */; };
+		D863DA1E298900D500903D41 /* SearchViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863DA1D298900D500903D41 /* SearchViewViewModel.swift */; };
+		D863DA202989034C00903D41 /* NoSearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863DA1F2989034B00903D41 /* NoSearchResultsView.swift */; };
+		D863DA23298903D100903D41 /* NoSearchResultsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863DA22298903D100903D41 /* NoSearchResultsViewViewModel.swift */; };
+		D863DA252989042000903D41 /* SearchInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863DA242989042000903D41 /* SearchInputView.swift */; };
+		D863DA272989045300903D41 /* SearchInputViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863DA262989045300903D41 /* SearchInputViewViewModel.swift */; };
 		D864A841298812C90037DAE6 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D864A840298812C90037DAE6 /* LocationView.swift */; };
 		D864A84329882A380037DAE6 /* LocationViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D864A84229882A380037DAE6 /* LocationViewViewModel.swift */; };
 		D864A845298836D50037DAE6 /* GetLocationsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D864A844298836D50037DAE6 /* GetLocationsResponse.swift */; };
@@ -71,6 +77,12 @@
 		D83B1309297A99D60003101F /* GetAllCharactersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllCharactersResponse.swift; sourceTree = "<group>"; };
 		D83B130B297ABB4C0003101F /* CharacterListViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListViewViewModel.swift; sourceTree = "<group>"; };
 		D83B130D297ABC500003101F /* CharacterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListView.swift; sourceTree = "<group>"; };
+		D863DA1B2988FFF600903D41 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		D863DA1D298900D500903D41 /* SearchViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewViewModel.swift; sourceTree = "<group>"; };
+		D863DA1F2989034B00903D41 /* NoSearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSearchResultsView.swift; sourceTree = "<group>"; };
+		D863DA22298903D100903D41 /* NoSearchResultsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSearchResultsViewViewModel.swift; sourceTree = "<group>"; };
+		D863DA242989042000903D41 /* SearchInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInputView.swift; sourceTree = "<group>"; };
+		D863DA262989045300903D41 /* SearchInputViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInputViewViewModel.swift; sourceTree = "<group>"; };
 		D864A840298812C90037DAE6 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		D864A84229882A380037DAE6 /* LocationViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewViewModel.swift; sourceTree = "<group>"; };
 		D864A844298836D50037DAE6 /* GetLocationsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLocationsResponse.swift; sourceTree = "<group>"; };
@@ -163,6 +175,26 @@
 				D864A844298836D50037DAE6 /* GetLocationsResponse.swift */,
 			);
 			path = APIResponseTypes;
+			sourceTree = "<group>";
+		};
+		D863DA1A2988FFCD00903D41 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				D863DA1B2988FFF600903D41 /* SearchView.swift */,
+				D863DA1F2989034B00903D41 /* NoSearchResultsView.swift */,
+				D863DA242989042000903D41 /* SearchInputView.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		D863DA212989038600903D41 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				D863DA1D298900D500903D41 /* SearchViewViewModel.swift */,
+				D863DA22298903D100903D41 /* NoSearchResultsViewViewModel.swift */,
+				D863DA262989045300903D41 /* SearchInputViewViewModel.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		D864A83F298812960037DAE6 /* Location */ = {
@@ -332,6 +364,7 @@
 		D8BB6C80297957F7003635BC /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				D863DA212989038600903D41 /* Search */,
 				D864A84829883BDB0037DAE6 /* Locations */,
 				D87806892983F9A700F08641 /* Settings */,
 				D873F5492982F47E0093F5E5 /* EpisodeDetail */,
@@ -346,6 +379,7 @@
 		D8BB6C8129795809003635BC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D863DA1A2988FFCD00903D41 /* Search */,
 				D864A84D298860D80037DAE6 /* LocationDetails */,
 				D864A83F298812960037DAE6 /* Location */,
 				D878069029845AA200F08641 /* SwiftUI */,
@@ -470,6 +504,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8AE93D72981273E00B8F6C8 /* CharacterInfoCollectionViewCellViewModel.swift in Sources */,
+				D863DA1C2988FFF600903D41 /* SearchView.swift in Sources */,
 				D8BB6C8C29795B2A003635BC /* LocationViewController.swift in Sources */,
 				D8BB6C9E2979B29D003635BC /* CharacterStatus.swift in Sources */,
 				D83B130E297ABC500003101F /* CharacterListView.swift in Sources */,
@@ -493,6 +528,7 @@
 				D864A8472988388E0037DAE6 /* LocationTableViewCell.swift in Sources */,
 				D8BB6C8E29795B66003635BC /* CharacterViewController.swift in Sources */,
 				D8BB6C87297959BA003635BC /* Character.swift in Sources */,
+				D863DA1E298900D500903D41 /* SearchViewViewModel.swift in Sources */,
 				D8AE93D92981275C00B8F6C8 /* CharacterPhotoCollectionViewCellViewModel.swift in Sources */,
 				D873F5432982A7B50093F5E5 /* GetAllEpisodesResponse.swift in Sources */,
 				D873F53829826AFF0093F5E5 /* APICacheManager.swift in Sources */,
@@ -504,11 +540,15 @@
 				D864A845298836D50037DAE6 /* GetLocationsResponse.swift in Sources */,
 				D8BB6C9429797036003635BC /* Service.swift in Sources */,
 				D8AE93D52981272500B8F6C8 /* CharacterEpisodeCollectionViewCellViewModel.swift in Sources */,
+				D863DA23298903D100903D41 /* NoSearchResultsViewViewModel.swift in Sources */,
 				D8BB6C8529795993003635BC /* Location.swift in Sources */,
+				D863DA252989042000903D41 /* SearchInputView.swift in Sources */,
 				D8BB6C6C29794304003635BC /* SceneDelegate.swift in Sources */,
 				D864A841298812C90037DAE6 /* LocationView.swift in Sources */,
 				D878068D2983FA8300F08641 /* SettingCellViewModel.swift in Sources */,
 				D873F53A298276880093F5E5 /* EpisodeDetailViewViewModel.swift in Sources */,
+				D863DA272989045300903D41 /* SearchInputViewViewModel.swift in Sources */,
+				D863DA202989034C00903D41 /* NoSearchResultsView.swift in Sources */,
 				D8DDA09C297EE2DF0094AEE5 /* FooterLoadingCollectionReusableView.swift in Sources */,
 				D8BB6CA02979B395003635BC /* CharacterGender.swift in Sources */,
 				D864A84C29885DFF0037DAE6 /* LocationDetailViewController.swift in Sources */,

@@ -37,7 +37,9 @@ final class EpisodeViewController: UIViewController {
     }
     
     @objc private func didTapSearch() {
-        
+        let vc = SearchViewController(config: .init(type: .episode))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
