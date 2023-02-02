@@ -52,6 +52,13 @@ final class SearchViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setUpViews()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Search", style: .done, target: self, action: #selector(didTapExecuteSearch))
+        searchView.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        searchView.presentKeyboard()
     }
     
     private func setUpViews() {
@@ -67,5 +74,12 @@ final class SearchViewController: UIViewController {
     
     @objc private func didTapExecuteSearch() {
        // viewModel.executeSearch()
+    }
+}
+
+extension SearchViewController: SearchViewDelegate {
+    // MARK: - SearchViewDelegate
+    func rmSearchView(_ searchView: SearchView, didSelectOption option: SearchInputViewViewModel.DynamicOption) {
+        print("Should present option picker")
     }
 }

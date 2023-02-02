@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol SearchViewDelegate: AnyObject {
+    func rmSearchView(_ searchView: SearchView, didSelectOption option: SearchInputViewViewModel.DynamicOption)
+}
+
 final class SearchView: UIView {
     
+    weak var delegate: SearchViewDelegate?
     private let viewModel: SearchViewViewModel
     
     // MARK: - Subviews
@@ -24,6 +29,7 @@ final class SearchView: UIView {
         backgroundColor = .systemBackground
         setUpViews()
         searchInputView.configure(with: .init(type: viewModel.config.type))
+        searchInputView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -42,8 +48,12 @@ final class SearchView: UIView {
             searchInputView.topAnchor.constraint(equalTo: topAnchor),
             searchInputView.leftAnchor.constraint(equalTo: leftAnchor),
             searchInputView.rightAnchor.constraint(equalTo: rightAnchor),
-            searchInputView.heightAnchor.constraint(equalToConstant: 110)
+            searchInputView.heightAnchor.constraint(equalToConstant: viewModel.config.type == .episode ? 55 : 110)
         ])
+    }
+    
+    func presentKeyboard() {
+        searchInputView.presentKeyboard()
     }
 }
 
@@ -61,4 +71,13 @@ extension SearchView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
     }
+}
+
+extension SearchView: SearchInputViewDelegate {
+    // MARK: - SearchInputViewDelegate
+    func rmSearchInputView(_inputView: SearchInputView, didSelectOption option: SearchInputViewViewModel.DynamicOption) {
+        delegate?.rmSearchView(self, didSelectOption: option)
+    }
+    
+    
 }
