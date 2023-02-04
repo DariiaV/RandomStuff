@@ -8,7 +8,7 @@
 import UIKit
 ///Configurable controller to search
 final class SearchViewController: UIViewController {
-    ///Configuration for search sessoin
+    ///Configuration for search session
     struct Config {
         enum `Type` {
             case character
@@ -73,13 +73,18 @@ final class SearchViewController: UIViewController {
     }
     
     @objc private func didTapExecuteSearch() {
-       // viewModel.executeSearch()
+        // viewModel.executeSearch()
     }
 }
 
 extension SearchViewController: SearchViewDelegate {
     // MARK: - SearchViewDelegate
     func rmSearchView(_ searchView: SearchView, didSelectOption option: SearchInputViewViewModel.DynamicOption) {
-        print("Should present option picker")
+        let vc = SearchOptionPickerViewController(option: option) { selection in
+            print("Did select \(selection)")
+        }
+        vc.sheetPresentationController?.detents = [.medium()]
+        vc.sheetPresentationController?.prefersGrabberVisible = true
+        present(vc, animated: true)
     }
 }

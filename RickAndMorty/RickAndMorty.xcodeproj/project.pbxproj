@@ -39,6 +39,7 @@
 		D878068D2983FA8300F08641 /* SettingCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D878068C2983FA8300F08641 /* SettingCellViewModel.swift */; };
 		D878068F2983FB6C00F08641 /* SettingsOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = D878068E2983FB6C00F08641 /* SettingsOption.swift */; };
 		D878069229845AED00F08641 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D878069129845AED00F08641 /* SettingsView.swift */; };
+		D87CDD3E298EC15E001A39D3 /* SearchOptionPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CDD3D298EC15E001A39D3 /* SearchOptionPickerViewController.swift */; };
 		D8AE93CE2981250D00B8F6C8 /* CharacterPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AE93CD2981250D00B8F6C8 /* CharacterPhotoCollectionViewCell.swift */; };
 		D8AE93D02981255000B8F6C8 /* CharacterInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AE93CF2981255000B8F6C8 /* CharacterInfoCollectionViewCell.swift */; };
 		D8AE93D22981258100B8F6C8 /* CharacterEpisodeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AE93D12981258100B8F6C8 /* CharacterEpisodeCollectionViewCell.swift */; };
@@ -106,6 +107,7 @@
 		D878068C2983FA8300F08641 /* SettingCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCellViewModel.swift; sourceTree = "<group>"; };
 		D878068E2983FB6C00F08641 /* SettingsOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOption.swift; sourceTree = "<group>"; };
 		D878069129845AED00F08641 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D87CDD3D298EC15E001A39D3 /* SearchOptionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOptionPickerViewController.swift; sourceTree = "<group>"; };
 		D8AE93CD2981250D00B8F6C8 /* CharacterPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		D8AE93CF2981255000B8F6C8 /* CharacterInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		D8AE93D12981258100B8F6C8 /* CharacterEpisodeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterEpisodeCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -268,6 +270,15 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
+		D87CDD3F298EC307001A39D3 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				D87CDD3D298EC15E001A39D3 /* SearchOptionPickerViewController.swift */,
+				D873F5442982C3140093F5E5 /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		D8AE93CB2981240B00B8F6C8 /* CharacterDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -425,9 +436,9 @@
 		D8DDA094297ED63C0094AEE5 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				D87CDD3F298EC307001A39D3 /* Search */,
 				D8DDA095297ED68D0094AEE5 /* CharacterDetailViewController.swift */,
 				D873F535298266AF0093F5E5 /* EpisodeDetailViewController.swift */,
-				D873F5442982C3140093F5E5 /* SearchViewController.swift */,
 				D864A84B29885DFF0037DAE6 /* LocationDetailViewController.swift */,
 			);
 			path = Other;
@@ -519,6 +530,7 @@
 				D864A84A29883C080037DAE6 /* LocationTableViewCellViewModel.swift in Sources */,
 				D864A851298862540037DAE6 /* LocationDetailViewViewModel.swift in Sources */,
 				D864A84F2988610B0037DAE6 /* LocationDetailView.swift in Sources */,
+				D87CDD3E298EC15E001A39D3 /* SearchOptionPickerViewController.swift in Sources */,
 				D8BB6C6E29794304003635BC /* TabBarViewController.swift in Sources */,
 				D873F53F29829B890093F5E5 /* EpisodeListView.swift in Sources */,
 				D8BB6C9229795BD6003635BC /* SettingsViewController.swift in Sources */,
