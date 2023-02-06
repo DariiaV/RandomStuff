@@ -73,15 +73,17 @@ final class SearchViewController: UIViewController {
     }
     
     @objc private func didTapExecuteSearch() {
-        // viewModel.executeSearch()
+        viewModel.executeSearch()
     }
 }
 
 extension SearchViewController: SearchViewDelegate {
     // MARK: - SearchViewDelegate
     func rmSearchView(_ searchView: SearchView, didSelectOption option: SearchInputViewViewModel.DynamicOption) {
-        let vc = SearchOptionPickerViewController(option: option) { selection in
-            print("Did select \(selection)")
+        let vc = SearchOptionPickerViewController(option: option) { [weak self] selection in
+            DispatchQueue.main.async {
+                self?.viewModel.set(value: selection, for: option)
+            }
         }
         vc.sheetPresentationController?.detents = [.medium()]
         vc.sheetPresentationController?.prefersGrabberVisible = true
