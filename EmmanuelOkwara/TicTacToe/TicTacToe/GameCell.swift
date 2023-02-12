@@ -25,6 +25,11 @@ final class GameCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+    }
+    
     private func configure() {
         addSubviews(imageView)
         
@@ -36,7 +41,10 @@ final class GameCell: UICollectionViewCell {
         ])
     }
     
-    func setupCellImage(image: UIImage?) {
-        imageView.image = image
+    func setupCellImage(imageName: String?) {
+        guard let imageName else {
+            return
+        }
+        imageView.image = UIImage(named: imageName)
     }
 }

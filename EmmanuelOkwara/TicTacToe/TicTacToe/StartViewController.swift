@@ -122,7 +122,6 @@ class StartViewController: UIViewController {
             vc.name = "\(name):"
             navigationController?.pushViewController(vc, animated: true)
         }
-        
     }
 }
 
