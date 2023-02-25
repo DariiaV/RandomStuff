@@ -24,8 +24,8 @@ final class SearchViewViewModel {
     }
     
     func executeSearch() {
-        searchText = "Rick"
-        var queryParams: [URLQueryItem] = [URLQueryItem(name: "name", value: searchText)]
+        print("Search text: \(searchText)")
+        var queryParams: [URLQueryItem] = [URLQueryItem(name: "name", value: searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))]
         
         queryParams.append(contentsOf: optionMap.enumerated().compactMap({ _, element in
             let key: SearchInputViewViewModel.DynamicOption = element.key

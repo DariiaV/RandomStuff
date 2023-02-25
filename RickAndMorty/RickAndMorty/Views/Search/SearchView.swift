@@ -79,9 +79,15 @@ extension SearchView: UICollectionViewDelegate, UICollectionViewDataSource {
 
 extension SearchView: SearchInputViewDelegate {
     // MARK: - SearchInputViewDelegate
-    func rmSearchInputView(_inputView: SearchInputView, didSelectOption option: SearchInputViewViewModel.DynamicOption) {
+    func rmSearchInputView(_ inputView: SearchInputView, didSelectOption option: SearchInputViewViewModel.DynamicOption) {
         delegate?.rmSearchView(self, didSelectOption: option)
     }
     
+    func rmSearchInputView(_ inputView: SearchInputView, didChangeSearchText text: String) {
+        viewModel.set(query: text)
+    }
     
+    func rmSearchInputViewDidTapSearchKeyboardButton(_ inputView: SearchInputView) {
+        viewModel.executeSearch()
+    }
 }

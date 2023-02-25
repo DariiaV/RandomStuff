@@ -8,9 +8,11 @@
 import UIKit
 
 protocol SearchInputViewDelegate: AnyObject {
-    func rmSearchInputView(_inputView: SearchInputView, didSelectOption option: SearchInputViewViewModel.DynamicOption)
+    func rmSearchInputView(_ inputView: SearchInputView, didSelectOption option: SearchInputViewViewModel.DynamicOption)
+    func rmSearchInputView(_ inputView: SearchInputView, didChangeSearchText text: String)
+    func rmSearchInputViewDidTapSearchKeyboardButton(_ inputView: SearchInputView)
 }
-
+///View for top part of search screen with search bar
 final class SearchInputView: UIView {
     
     weak var delegate: SearchInputViewDelegate?
@@ -38,6 +40,7 @@ final class SearchInputView: UIView {
         super.init(frame: frame)
         
         setUpViews()
+        searchBar.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -99,7 +102,7 @@ final class SearchInputView: UIView {
         }
         let tag = sender.tag
         let selected = options[tag]
-        delegate?.rmSearchInputView(_inputView: self, didSelectOption: selected)
+        delegate?.rmSearchInputView(self, didSelectOption: selected)
     }
     
     func configure(with viewModel: SearchInputViewViewModel) {
@@ -120,5 +123,20 @@ final class SearchInputView: UIView {
         
         buttons[index].setAttributedTitle(NSAttributedString(string: value.uppercased(), attributes: [.font: UIFont.systemFont(ofSize: 18, weight: .medium), .foregroundColor: UIColor.link]), for: .normal)
         
+    }
+}
+
+extension SearchInputView: UISearchBarDelegate {
+    // MARK: - UISearchBarDelegate
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //Notify delegate of change text
+        print(searchText)
+        delegate?.rmSearchInputView(self, didChangeSearchText: searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        //Notify that search button was tapped
+        searchBar.resignFirstResponder()
+        delegate?.rmSearchInputViewDidTapSearchKeyboardButton(self)
     }
 }
