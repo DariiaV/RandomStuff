@@ -13,13 +13,13 @@ final class SearchViewViewModel {
     private var optionMap: [SearchInputViewViewModel.DynamicOption: String] = [:]
     private var searchText = ""
     private var optionMapUpdateBlock: (((SearchInputViewViewModel.DynamicOption, String)) -> Void)?
-    private var searchResultHandler: (() -> Void)?
+    private var searchResultHandler: ((SearchResultViewModel) -> Void)?
     // MARK: - Init
     init(config: SearchViewController.Config) {
         self.config = config
     }
     
-    func registerSearchResultHandler(_ block: @escaping () -> Void) {
+    func registerSearchResultHandler(_ block: @escaping (SearchResultViewModel) -> Void) {
         self.searchResultHandler = block
     }
     
@@ -35,15 +35,49 @@ final class SearchViewViewModel {
         
         let request = Request(endpoint: config.type.endPoint, queryParameters: queryParams)
         
-        print(request.url?.absoluteString)
-      
-        Service.shared.execute(request, expecting: GetAllCharactersResponse.self) { result in
+        switch config.type.endPoint {
+        case .character:
+            makeSearchAPICall(GetAllCharactersResponse.self, request: request)
+        case .episode:
+            makeSearchAPICall(GetAllEpisodesResponse.self, request: request)
+        case .location:
+            makeSearchAPICall(GetAllLocationsResponse.self, request: request)
+        }
+    }
+    
+    private func makeSearchAPICall<T:Codable>(_ type: T.Type, request: Request) {
+        Service.shared.execute(request, expecting: type) { [weak self] result in
             switch result {
             case .success(let model):
-                print("Search results found: \(model.results.count)")
+                self?.processSearchResults(model: model)
             case .failure(_):
                 break
             }
+        }
+    }
+    
+    private func processSearchResults(model: Codable) {
+        var resultsVM: SearchResultViewModel?
+        if let characterResults = model as? GetAllCharactersResponse {
+            resultsVM = .characters(characterResults.results.compactMap({
+                return CharacterCollectionViewCellViewModel(characterName: $0.name, characterStatus: $0.status, characterImageUrl: URL(string: $0.image))
+            }))
+        }
+        else if let episodesResults = model as? GetAllEpisodesResponse {
+            resultsVM = .episodes(episodesResults.results.compactMap({
+                return CharacterEpisodeCollectionViewCellViewModel(episodeDataUrl: URL(string: $0.url))
+            }))
+        }
+        else if let locationsResults = model as? GetAllLocationsResponse {
+            resultsVM = .locations(locationsResults.results.compactMap({
+                return LocationTableViewCellViewModel(location: $0)
+            }))
+        }
+        
+        if let results = resultsVM {
+            self.searchResultHandler?(results)
+        } else {
+            //fallback error
         }
     }
     

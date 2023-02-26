@@ -10,6 +10,7 @@
 		D83B130A297A99D60003101F /* GetAllCharactersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83B1309297A99D60003101F /* GetAllCharactersResponse.swift */; };
 		D83B130C297ABB4C0003101F /* CharacterListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83B130B297ABB4C0003101F /* CharacterListViewViewModel.swift */; };
 		D83B130E297ABC500003101F /* CharacterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83B130D297ABC500003101F /* CharacterListView.swift */; };
+		D85046C129ABF014006811C0 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85046C029ABF014006811C0 /* SearchResultViewModel.swift */; };
 		D863DA1C2988FFF600903D41 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863DA1B2988FFF600903D41 /* SearchView.swift */; };
 		D863DA1E298900D500903D41 /* SearchViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863DA1D298900D500903D41 /* SearchViewViewModel.swift */; };
 		D863DA202989034C00903D41 /* NoSearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863DA1F2989034B00903D41 /* NoSearchResultsView.swift */; };
@@ -78,6 +79,7 @@
 		D83B1309297A99D60003101F /* GetAllCharactersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllCharactersResponse.swift; sourceTree = "<group>"; };
 		D83B130B297ABB4C0003101F /* CharacterListViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListViewViewModel.swift; sourceTree = "<group>"; };
 		D83B130D297ABC500003101F /* CharacterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListView.swift; sourceTree = "<group>"; };
+		D85046C029ABF014006811C0 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		D863DA1B2988FFF600903D41 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		D863DA1D298900D500903D41 /* SearchViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewViewModel.swift; sourceTree = "<group>"; };
 		D863DA1F2989034B00903D41 /* NoSearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSearchResultsView.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				D863DA1D298900D500903D41 /* SearchViewViewModel.swift */,
 				D863DA22298903D100903D41 /* NoSearchResultsViewViewModel.swift */,
 				D863DA262989045300903D41 /* SearchInputViewViewModel.swift */,
+				D85046C029ABF014006811C0 /* SearchResultViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -537,6 +540,7 @@
 				D8BB6C89297959D4003635BC /* Episode.swift in Sources */,
 				D8BB6C6A29794304003635BC /* AppDelegate.swift in Sources */,
 				D8AE93D02981255000B8F6C8 /* CharacterInfoCollectionViewCell.swift in Sources */,
+				D85046C129ABF014006811C0 /* SearchResultViewModel.swift in Sources */,
 				D864A8472988388E0037DAE6 /* LocationTableViewCell.swift in Sources */,
 				D8BB6C8E29795B66003635BC /* CharacterViewController.swift in Sources */,
 				D8BB6C87297959BA003635BC /* Character.swift in Sources */,
