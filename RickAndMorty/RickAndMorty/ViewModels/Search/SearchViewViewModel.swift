@@ -14,6 +14,8 @@ final class SearchViewViewModel {
     private var searchText = ""
     private var optionMapUpdateBlock: (((SearchInputViewViewModel.DynamicOption, String)) -> Void)?
     private var searchResultHandler: ((SearchResultViewModel) -> Void)?
+    private var noResultsHandler: (() -> Void)?
+    
     // MARK: - Init
     init(config: SearchViewController.Config) {
         self.config = config
@@ -21,6 +23,10 @@ final class SearchViewViewModel {
     
     func registerSearchResultHandler(_ block: @escaping (SearchResultViewModel) -> Void) {
         self.searchResultHandler = block
+    }
+    
+    func registerNoResultsHandler(_ block: @escaping () -> Void) {
+        self.noResultsHandler = block
     }
     
     func executeSearch() {
@@ -51,6 +57,7 @@ final class SearchViewViewModel {
             case .success(let model):
                 self?.processSearchResults(model: model)
             case .failure(_):
+                self?.handleNoResults()
                 break
             }
         }
@@ -78,7 +85,12 @@ final class SearchViewViewModel {
             self.searchResultHandler?(results)
         } else {
             //fallback error
+            handleNoResults()
         }
+    }
+    
+    private func handleNoResults() {
+        noResultsHandler?()
     }
     
     func set(query text: String) {
