@@ -6,9 +6,13 @@
 //
 
 import UIKit
+protocol SearchResultsViewDelegate: AnyObject {
+    func rmSearchResultsView(_ resultsView: SearchResultsView, didTapLocationAt index: Int)
+}
 ///Shows search results UI(table or collection as needed)
 final class SearchResultsView: UIView {
     
+    weak var delegate: SearchResultsViewDelegate?
     private var viewModel: SearchResultViewModel? {
         didSet {
             self.processViewModel()
@@ -21,6 +25,8 @@ final class SearchResultsView: UIView {
         table.isHidden = true
         return table
     }()
+    
+    private var locationCellViewModels: [LocationTableViewCellViewModel] = []
     
     // MARK: - Init
     override init(frame: CGRect) {
@@ -44,7 +50,7 @@ final class SearchResultsView: UIView {
         case .episodes(let viewModels):
             setUpCollectionView()
         case .locations(let viewModels):
-            setUpTableView()
+            setUpTableView(viewModels: viewModels)
         }
     }
     
@@ -52,8 +58,12 @@ final class SearchResultsView: UIView {
         
     }
     
-    private func setUpTableView() {
+    private func setUpTableView(viewModels: [LocationTableViewCellViewModel]) {
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.isHidden = false
+        self.locationCellViewModels = viewModels
+        tableView.reloadData()
     }
     
     private func addConstraints() {
@@ -63,10 +73,29 @@ final class SearchResultsView: UIView {
             tableView.rightAnchor.constraint(equalTo: rightAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-        tableView.backgroundColor = .systemYellow
     }
     
     func configure(with viewModel: SearchResultViewModel) {
         self.viewModel = viewModel
+    }
+}
+
+extension SearchResultsView: UITableViewDataSource, UITableViewDelegate {
+    // MARK: - UITableViewDataSource, UITableViewDelegate
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return locationCellViewModels.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: LocationTableViewCell.cellIdentifier, for: indexPath) as? LocationTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.configure(with: locationCellViewModels[indexPath.row])
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        delegate?.rmSearchResultsView(self, didTapLocationAt: indexPath.row)
     }
 }

@@ -15,6 +15,7 @@ final class SearchViewViewModel {
     private var optionMapUpdateBlock: (((SearchInputViewViewModel.DynamicOption, String)) -> Void)?
     private var searchResultHandler: ((SearchResultViewModel) -> Void)?
     private var noResultsHandler: (() -> Void)?
+    private var searchResultModel: Codable?
     
     // MARK: - Init
     init(config: SearchViewController.Config) {
@@ -30,7 +31,6 @@ final class SearchViewViewModel {
     }
     
     func executeSearch() {
-        print("Search text: \(searchText)")
         var queryParams: [URLQueryItem] = [URLQueryItem(name: "name", value: searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))]
         
         queryParams.append(contentsOf: optionMap.enumerated().compactMap({ _, element in
@@ -82,6 +82,7 @@ final class SearchViewViewModel {
         }
         
         if let results = resultsVM {
+            self.searchResultModel = model
             self.searchResultHandler?(results)
         } else {
             //fallback error
@@ -105,5 +106,12 @@ final class SearchViewViewModel {
     
     func registerOptionChangeBlock(_ block: @escaping ((SearchInputViewViewModel.DynamicOption, String)) -> Void) {
         self.optionMapUpdateBlock = block
+    }
+    
+    func locationSearchResult(at index: Int) -> Location? {
+        guard let searchModel = searchResultModel as? GetAllLocationsResponse else {
+            return nil
+        }
+        return searchModel.results[index]
     }
 }
