@@ -124,9 +124,6 @@ extension SearchView: SearchResultsViewDelegate {
         guard let locationModel = viewModel.locationSearchResult(at: index) else {
             return
         }
-        print("Location tapped: \(locationModel)")
         delegate?.rmSearchView(self, didSelectLocation: locationModel)
     }
-    
-    
 }
