@@ -31,6 +31,10 @@ final class SearchViewViewModel {
     }
     
     func executeSearch() {
+        guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return
+        }
+        
         var queryParams: [URLQueryItem] = [URLQueryItem(name: "name", value: searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))]
         
         queryParams.append(contentsOf: optionMap.enumerated().compactMap({ _, element in
@@ -64,26 +68,31 @@ final class SearchViewViewModel {
     }
     
     private func processSearchResults(model: Codable) {
-        var resultsVM: SearchResultViewModel?
+        var resultsVM: SearchResultType?
+        var nextUrl: String?
         if let characterResults = model as? GetAllCharactersResponse {
             resultsVM = .characters(characterResults.results.compactMap({
                 return CharacterCollectionViewCellViewModel(characterName: $0.name, characterStatus: $0.status, characterImageUrl: URL(string: $0.image))
             }))
+            nextUrl = characterResults.info.next
         }
         else if let episodesResults = model as? GetAllEpisodesResponse {
             resultsVM = .episodes(episodesResults.results.compactMap({
                 return CharacterEpisodeCollectionViewCellViewModel(episodeDataUrl: URL(string: $0.url))
             }))
+            nextUrl = episodesResults.info.next
         }
         else if let locationsResults = model as? GetAllLocationsResponse {
             resultsVM = .locations(locationsResults.results.compactMap({
                 return LocationTableViewCellViewModel(location: $0)
             }))
+            nextUrl = locationsResults.info.next
         }
         
         if let results = resultsVM {
             self.searchResultModel = model
-            self.searchResultHandler?(results)
+            let vm = SearchResultViewModel(results: results, next: nextUrl)
+            self.searchResultHandler?(vm)
         } else {
             //fallback error
             handleNoResults()

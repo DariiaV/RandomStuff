@@ -86,7 +86,6 @@ final class LocationViewViewModel {
                 self?.isLoadingMoreLocations = false
             }
         }
-        
     }
     
     func location(at index: Int) -> Location? {
