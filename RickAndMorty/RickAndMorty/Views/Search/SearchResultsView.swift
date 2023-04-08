@@ -207,9 +207,9 @@ extension SearchResultsView: UIScrollViewDelegate {
     
     private func handleCharacterOrEpisodePagination(scrollView: UIScrollView) {
         guard let viewModel = viewModel,
-        !collectionViewCellViewModels.isEmpty,
-        viewModel.shouldShowLoadMoreIndicator,
-        !viewModel.isLoadingMoreResults else {
+              !collectionViewCellViewModels.isEmpty,
+              viewModel.shouldShowLoadMoreIndicator,
+              !viewModel.isLoadingMoreResults else {
             return
         }
         
@@ -217,11 +217,25 @@ extension SearchResultsView: UIScrollViewDelegate {
             let offset = scrollView.contentOffset.y
             let totalContentHeight = scrollView.contentSize.height
             let totalScrollViewFixedHeight = scrollView.frame.size.height
-
+            
             if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
                 viewModel.fetchAdditionalResults { [weak self] newResults in
-                    self?.tableView.tableFooterView = nil
-                    self?.collectionViewCellViewModels = newResults
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        strongSelf.tableView.tableFooterView = nil
+                       
+                        let originalCount = strongSelf.collectionViewCellViewModels.count
+                        let newCount = (newResults.count - originalCount)
+                        let total = originalCount + newCount
+                        let startingIndex = total - newCount
+                        let indexPathsToAdd: [IndexPath] = Array(startingIndex..<(startingIndex+newCount)).compactMap({
+                            return IndexPath(row: $0, section: 0)
+                        })
+                        strongSelf.collectionViewCellViewModels = newResults
+                        strongSelf.collectionView.insertItems(at: indexPathsToAdd)
+                    }
                 }
             }
             t.invalidate()
@@ -230,9 +244,9 @@ extension SearchResultsView: UIScrollViewDelegate {
     
     private func handleLocationPagination(scrollView: UIScrollView) {
         guard let viewModel = viewModel,
-        !locationCellViewModels.isEmpty,
-        viewModel.shouldShowLoadMoreIndicator,
-        !viewModel.isLoadingMoreResults else {
+              !locationCellViewModels.isEmpty,
+              viewModel.shouldShowLoadMoreIndicator,
+              !viewModel.isLoadingMoreResults else {
             return
         }
         
@@ -240,7 +254,7 @@ extension SearchResultsView: UIScrollViewDelegate {
             let offset = scrollView.contentOffset.y
             let totalContentHeight = scrollView.contentSize.height
             let totalScrollViewFixedHeight = scrollView.frame.size.height
-
+            
             if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
                 DispatchQueue.main.async {
                     self?.showTableLoadingIndicator()
@@ -255,7 +269,7 @@ extension SearchResultsView: UIScrollViewDelegate {
             t.invalidate()
         }
     }
-
+    
     private func showTableLoadingIndicator() {
         let footer = TableLoadingFooterView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: 100))
         tableView.tableFooterView = footer
