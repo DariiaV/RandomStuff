@@ -8,6 +8,8 @@
 import UIKit
 protocol SearchResultsViewDelegate: AnyObject {
     func rmSearchResultsView(_ resultsView: SearchResultsView, didTapLocationAt index: Int)
+    func rmSearchResultsView(_ resultsView: SearchResultsView, didTapCharacterAt index: Int)
+    func rmSearchResultsView(_ resultsView: SearchResultsView, didTapEpisodeAt index: Int)
 }
 ///Shows search results UI(table or collection as needed)
 final class SearchResultsView: UIView {
@@ -29,7 +31,7 @@ final class SearchResultsView: UIView {
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(CharacterCollectionViewCell.self,
                                 forCellWithReuseIdentifier: CharacterCollectionViewCell.cellIdentifier)
@@ -158,6 +160,17 @@ extension SearchResultsView: UICollectionViewDataSource, UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        guard let viewModel = viewModel else {
+            return
+        }
+        switch viewModel.results {
+        case .characters:
+            delegate?.rmSearchResultsView(self, didTapCharacterAt: indexPath.row)
+        case .episodes:
+            delegate?.rmSearchResultsView(self, didTapEpisodeAt: indexPath.row)
+        case .locations:
+            break
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

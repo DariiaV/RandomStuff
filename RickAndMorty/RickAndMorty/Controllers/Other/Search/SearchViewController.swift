@@ -106,4 +106,16 @@ extension SearchViewController: SearchViewDelegate {
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func rmSearchView(_ searchView: SearchView, didSelectCharacter character: Character) {
+        let vc = CharacterDetailViewController(viewModel: .init(character: character))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func rmSearchView(_ searchView: SearchView, didSelectEpisode episode: Episode) {
+        let vc = EpisodeDetailViewController(url: URL(string: episode.url))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
