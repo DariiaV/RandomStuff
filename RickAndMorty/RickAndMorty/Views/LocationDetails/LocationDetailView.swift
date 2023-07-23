@@ -95,8 +95,8 @@ extension LocationDetailView {
         guard let sections = viewModel?.cellViewModels else {
             return createInfoLayout()
         }
+        
         switch sections[section] {
-            
         case .information:
             return createInfoLayout()
         case .characters:
@@ -109,7 +109,8 @@ extension LocationDetailView {
         let item = NSCollectionLayoutItem(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .fractionalHeight(1)))
+                heightDimension: .fractionalHeight(1)
+            ))
         
         item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
