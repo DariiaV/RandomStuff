@@ -5,6 +5,13 @@ Full featured iOS app showcasing the Rick and Morty API.
 
 ![](RickAndMorty/RickAndMorty.gif)
 
+## [ToDoList](https://github.com/DariiaV/RandomStuff/tree/main/ToDoList)
+### What used:
+- SwiftUI
+- Firebase
+
+![](ToDoList/ToDoList.gif)
+
 ## [Animal Gallery](https://github.com/DariiaV/RandomStuff/tree/main/EmmanuelOkwara/Animal%20Gallery)
 ### What used:
 - Tap Gesture Recognizer
