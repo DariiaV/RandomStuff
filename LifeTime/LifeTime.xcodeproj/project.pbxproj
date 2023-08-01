@@ -10,6 +10,11 @@
 		D84D75222A795CA10010F39F /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D75212A795CA10010F39F /* AlertManager.swift */; };
 		D84D75252A795F800010F39F /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D75242A795F800010F39F /* RegisterModel.swift */; };
 		D84D75272A7964090010F39F /* ValidationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D75262A7964090010F39F /* ValidationControl.swift */; };
+		D84D75292A79742A0010F39F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D75282A79742A0010F39F /* TabBarController.swift */; };
+		D84D752B2A7974A70010F39F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D752A2A7974A70010F39F /* ProfileViewController.swift */; };
+		D84D752D2A7976670010F39F /* HabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D752C2A7976670010F39F /* HabitViewController.swift */; };
+		D84D752F2A7982E10010F39F /* PomodoroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D752E2A7982E10010F39F /* PomodoroViewController.swift */; };
+		D84D75312A7984C00010F39F /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D75302A7984C00010F39F /* StatisticsViewController.swift */; };
 		D8DE44C82A78356700B75E8F /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE44C72A78356700B75E8F /* UITextField+Extensions.swift */; };
 		D8DE44CB2A79159100B75E8F /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE44CA2A79159100B75E8F /* UIView+Extensions.swift */; };
 		D8DE44CD2A7915CF00B75E8F /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE44CC2A7915CF00B75E8F /* UIStackView+Extensions.swift */; };
@@ -31,6 +36,11 @@
 		D84D75212A795CA10010F39F /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		D84D75242A795F800010F39F /* RegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
 		D84D75262A7964090010F39F /* ValidationControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationControl.swift; sourceTree = "<group>"; };
+		D84D75282A79742A0010F39F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		D84D752A2A7974A70010F39F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D84D752C2A7976670010F39F /* HabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewController.swift; sourceTree = "<group>"; };
+		D84D752E2A7982E10010F39F /* PomodoroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroViewController.swift; sourceTree = "<group>"; };
+		D84D75302A7984C00010F39F /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		D8DE44C72A78356700B75E8F /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		D8DE44CA2A79159100B75E8F /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		D8DE44CC2A7915CF00B75E8F /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
@@ -113,6 +123,11 @@
 			children = (
 				D8F68EB22A782BC300B78E4F /* LoginController.swift */,
 				D8DE44DA2A793A0D00B75E8F /* RegisterViewController.swift */,
+				D84D75282A79742A0010F39F /* TabBarController.swift */,
+				D84D752A2A7974A70010F39F /* ProfileViewController.swift */,
+				D84D752C2A7976670010F39F /* HabitViewController.swift */,
+				D84D752E2A7982E10010F39F /* PomodoroViewController.swift */,
+				D84D75302A7984C00010F39F /* StatisticsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -236,10 +251,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8F68EB32A782BC300B78E4F /* LoginController.swift in Sources */,
+				D84D75292A79742A0010F39F /* TabBarController.swift in Sources */,
 				D8DE44DE2A793F0F00B75E8F /* RegisterUser.swift in Sources */,
 				D84D75222A795CA10010F39F /* AlertManager.swift in Sources */,
+				D84D752B2A7974A70010F39F /* ProfileViewController.swift in Sources */,
 				D8F68EAF2A782BC300B78E4F /* AppDelegate.swift in Sources */,
 				D8DE44E02A793F3700B75E8F /* LoginUser.swift in Sources */,
+				D84D75312A7984C00010F39F /* StatisticsViewController.swift in Sources */,
+				D84D752D2A7976670010F39F /* HabitViewController.swift in Sources */,
 				D8DE44DB2A793A0D00B75E8F /* RegisterViewController.swift in Sources */,
 				D84D75272A7964090010F39F /* ValidationControl.swift in Sources */,
 				D8DE44CB2A79159100B75E8F /* UIView+Extensions.swift in Sources */,
@@ -247,6 +266,7 @@
 				D84D75252A795F800010F39F /* RegisterModel.swift in Sources */,
 				D8F68EB12A782BC300B78E4F /* SceneDelegate.swift in Sources */,
 				D8DE44C82A78356700B75E8F /* UITextField+Extensions.swift in Sources */,
+				D84D752F2A7982E10010F39F /* PomodoroViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -73,7 +73,7 @@ class LoginController: UIViewController {
         button.setTitle("Log In", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
-        //button.addTarget(self, action: #selector(logInApp), for: .touchUpInside)
+        button.addTarget(self, action: #selector(logInButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -136,10 +136,38 @@ class LoginController: UIViewController {
         ])
     }
     
-    @objc func createAnAccount() {
+    @objc private func createAnAccount() {
         let vc = RegisterViewController()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
+    }
+    
+    @objc private func logInButtonTapped() {
+        let loginRequest = LoginUser(email: emailTextField.text ?? "",
+                                            password: passwordTextField.text ?? "")
+
+        // Email check
+        if !ValidationControl.isValidEmail(for: loginRequest.email) {
+            AlertManager.showInvalidEmailAlert(on: self)
+            return
+        }
+
+        // Password check
+        if !ValidationControl.isPasswordValid(for: loginRequest.password) {
+            AlertManager.showInvalidPasswordAlert(on: self)
+            return
+        }
+
+        RegisterModel.shared.signIn(with: loginRequest) { error in
+            if let error = error {
+                AlertManager.showSignInErrorAlert(on: self, with: error)
+                return
+            }
+            
+            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+                sceneDelegate.checkAuthentication()
+            }
+        }
     }
 }
 
