@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>329663795819-u6qh2li72ndts9gtcta3vlvhujgmorc0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.329663795819-u6qh2li72ndts9gtcta3vlvhujgmorc0</string>
+	<key>API_KEY</key>
+	<string></string>
+	<key>GCM_SENDER_ID</key>
+	<string>329663795819</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>dariiagrigoreva.LifeTime</string>
+	<key>PROJECT_ID</key>
+	<string>lifetime-c0665</string>
+	<key>STORAGE_BUCKET</key>
+	<string>lifetime-c0665.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:329663795819:ios:57c3165b500e8b1e2dd72e</string>
+</dict>
+</plist>
