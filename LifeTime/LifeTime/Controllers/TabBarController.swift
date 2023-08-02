@@ -25,7 +25,7 @@ class TabBarController: UITabBarController {
             
             generateVC(
                 viewController: PomodoroViewController(),
-                image: UIImage(systemName: "hourglass.badge.plus")
+                image: UIImage(systemName: "clock.arrow.2.circlepath")
             ),
 
             generateVC(
