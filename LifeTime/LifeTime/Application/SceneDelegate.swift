@@ -29,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     public func checkAuthentication() {
         if Auth.auth().currentUser == nil {
-            goToController(with: UINavigationController(rootViewController: LoginController()))
+            goToController(with: UINavigationController(rootViewController: LoginViewController()))
         } else {
              goToController(with: TabBarController())
         }

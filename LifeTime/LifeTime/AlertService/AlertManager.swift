@@ -21,7 +21,7 @@ extension AlertManager {
     public static func showRegistrationErrorAlert(on vc: UIViewController) {
         self.showBasicAlert(on: vc, title: "Unknown Registration Error", message: nil)
     }
-
+    
     public static func showRegistrationErrorAlert(on vc: UIViewController, with error: Error) {
         self.showBasicAlert(on: vc, title: "Unknown Registration Error", message: "\(error.localizedDescription)")
     }
@@ -32,7 +32,7 @@ extension AlertManager {
     public static func showSignInErrorAlert(on vc: UIViewController) {
         self.showBasicAlert(on: vc, title: "Unknown Error Signing In", message: nil)
     }
-
+    
     public static func showSignInErrorAlert(on vc: UIViewController, with error: Error) {
         self.showBasicAlert(on: vc, title: "Error Signing In", message: "\(error.localizedDescription)")
     }
@@ -43,13 +43,20 @@ extension AlertManager {
     public static func showInvalidEmailAlert(on vc: UIViewController) {
         self.showBasicAlert(on: vc, title: "Invalid Email", message: "Please enter a valid email.")
     }
-
+    
     public static func showInvalidPasswordAlert(on vc: UIViewController) {
         self.showBasicAlert(on: vc, title: "Invalid Password", message: "Please enter a valid password.")
     }
-
+    
     public static func showInvalidUsernameAlert(on vc: UIViewController) {
         self.showBasicAlert(on: vc, title: "Invalid Username", message: "Please enter a valid username.")
+    }
+}
+
+extension AlertManager {
+    // MARK: - Logout Errors
+    public static func showLogoutError(on vc: UIViewController, with error: Error) {
+        self.showBasicAlert(on: vc, title: "Log Out Error", message: "\(error.localizedDescription)")
     }
 }
 

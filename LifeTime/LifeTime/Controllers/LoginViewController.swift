@@ -1,5 +1,5 @@
 //
-//  LoginController.swift
+//  LoginViewController.swift
 //  LifeTime
 //
 //  Created by Дария Григорьева on 31.07.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginController: UIViewController {
+class LoginViewController: UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
