@@ -15,6 +15,7 @@
 		D84D752D2A7976670010F39F /* HabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D752C2A7976670010F39F /* HabitViewController.swift */; };
 		D84D752F2A7982E10010F39F /* PomodoroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D752E2A7982E10010F39F /* PomodoroViewController.swift */; };
 		D84D75312A7984C00010F39F /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D75302A7984C00010F39F /* StatisticsViewController.swift */; };
+		D8A7E9FB2A838E0B00E264B8 /* FocusSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A7E9FA2A838E0B00E264B8 /* FocusSession.swift */; };
 		D8DE44C82A78356700B75E8F /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE44C72A78356700B75E8F /* UITextField+Extensions.swift */; };
 		D8DE44CB2A79159100B75E8F /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE44CA2A79159100B75E8F /* UIView+Extensions.swift */; };
 		D8DE44CD2A7915CF00B75E8F /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE44CC2A7915CF00B75E8F /* UIStackView+Extensions.swift */; };
@@ -41,6 +42,7 @@
 		D84D752C2A7976670010F39F /* HabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewController.swift; sourceTree = "<group>"; };
 		D84D752E2A7982E10010F39F /* PomodoroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroViewController.swift; sourceTree = "<group>"; };
 		D84D75302A7984C00010F39F /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
+		D8A7E9FA2A838E0B00E264B8 /* FocusSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSession.swift; sourceTree = "<group>"; };
 		D8DE44C72A78356700B75E8F /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		D8DE44CA2A79159100B75E8F /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		D8DE44CC2A7915CF00B75E8F /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			children = (
 				D8DE44DD2A793F0F00B75E8F /* RegisterUser.swift */,
 				D8DE44DF2A793F3700B75E8F /* LoginUser.swift */,
+				D8A7E9FA2A838E0B00E264B8 /* FocusSession.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				D8DE44E02A793F3700B75E8F /* LoginUser.swift in Sources */,
 				D84D75312A7984C00010F39F /* StatisticsViewController.swift in Sources */,
 				D84D752D2A7976670010F39F /* HabitViewController.swift in Sources */,
+				D8A7E9FB2A838E0B00E264B8 /* FocusSession.swift in Sources */,
 				D8DE44DB2A793A0D00B75E8F /* RegisterViewController.swift in Sources */,
 				D84D75272A7964090010F39F /* ValidationControl.swift in Sources */,
 				D8DE44CB2A79159100B75E8F /* UIView+Extensions.swift in Sources */,

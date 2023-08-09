@@ -9,6 +9,11 @@ import UIKit
 
 class PomodoroViewController: UIViewController {
     
+    private var timer = Timer()
+    private var isTimerStarted = false
+    private var time = 1500
+    private var nextFocusBlock: FocusSession = .firstSession
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Focus on what's important"
@@ -74,13 +79,23 @@ class PomodoroViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var startButton: UIButton = {
+    private lazy var startStopButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .systemPurple
         button.setTitle("Start", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
-        //button.addTarget(self, action: #selector(didTapStart), for: .touchUpInside)
+        button.addTarget(self, action: #selector(startStopButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var resetButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .systemPurple
+        button.setTitle("Reset", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -92,12 +107,12 @@ class PomodoroViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = .systemBackground
-        
         view.addSubviews(titleLabel,
                          timerLabel,
-                         startButton,
                          circleStackView,
-                         imageView)
+                         imageView,
+                         startStopButton,
+                         resetButton)
         
         circleStackView.addArrangedSubviews(circleOneImageView,
                                             circleTwoImageView,
@@ -117,14 +132,121 @@ class PomodoroViewController: UIViewController {
             timerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             timerLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             
-            startButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 30),
-            startButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            startButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            startStopButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 30),
+            startStopButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            startStopButton.widthAnchor.constraint(equalToConstant: 100),
             
-            imageView.topAnchor.constraint(equalTo: startButton.bottomAnchor, constant: 30),
+            resetButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 30),
+            resetButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            resetButton.widthAnchor.constraint(equalToConstant: 100),
+            
+            imageView.topAnchor.constraint(equalTo: startStopButton.bottomAnchor, constant: 30),
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView.heightAnchor.constraint(equalToConstant: 300),
             imageView.widthAnchor.constraint(equalToConstant: 300),
         ])
+    }
+    
+    @objc private func startStopButtonTapped() {
+        if !isTimerStarted{
+            startTimer()
+            isTimerStarted = true
+            startStopButton.setTitle("Pause", for: .normal)
+        } else {
+            timer.invalidate()
+            isTimerStarted = false
+            startStopButton.setTitle("Start", for: .normal)
+        }
+    }
+    
+    @objc private func resetButtonTapped() {
+        let alert = UIAlertController(title: "Reset Focus?", message: "Are you sure you would like to reset the Focus?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { _ in
+            //do nothing
+        }))
+        
+        alert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] _ in
+            timer.invalidate()
+            time = 1500
+            isTimerStarted = false
+            timerLabel.text = "25:00"
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func updateTimer() {
+        if time > 0 {
+            isTimerStarted = true
+            time -= 1
+            timerLabel.text = formatTime()
+        } else if time == 0 {
+            isTimerStarted = false
+            timer.invalidate()
+            updateCompletedSession(for: nextFocusBlock)
+            time = 1500
+        }
+    }
+    
+    private func formatTime() -> String {
+        let minutes = Int(time) / 60 % 60
+        let seconds = Int(time) % 60
+        return String(format:"%02i:%02i", minutes, seconds)
+    }
+    
+    private func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    private func updateCompletedSession(for nextTimeBlock: FocusSession) {
+        
+        switch nextTimeBlock {
+        case .firstSession:
+            timerLabel.text = "25:00"
+            startStopButton.setTitle("Start", for: .normal)
+            circleOneImageView.image = UIImage(systemName: "circle.fill")
+            nextFocusBlock = .secondSession
+            
+        case .secondSession:
+            timerLabel.text = "25:00"
+            startStopButton.setTitle("Start", for: .normal)
+            circleTwoImageView.image = UIImage(systemName: "circle.fill")
+            nextFocusBlock = .thirdSession
+            
+        case .thirdSession:
+            timerLabel.text = "25:00"
+            startStopButton.setTitle("Start", for: .normal)
+            circleThreeImageView.image = UIImage(systemName: "circle.fill")
+            nextFocusBlock = .fourthSession
+            
+        case .fourthSession:
+            timerLabel.text = "25:00"
+            startStopButton.setTitle("Start", for: .normal)
+            circleFourImageView.image = UIImage(systemName: "circle.fill")
+            nextFocusBlock = .firstSession
+            
+            if time == 0 {
+                startNewCycleFocus()
+            }
+        }
+    }
+    
+    private func resetImageViews() {
+        circleOneImageView.image = UIImage(systemName: "circle")
+        circleTwoImageView.image = UIImage(systemName: "circle")
+        circleThreeImageView.image = UIImage(systemName: "circle")
+        circleFourImageView.image = UIImage(systemName: "circle")
+    }
+    
+    private func startNewCycleFocus() {
+        let alert = UIAlertController(title: "Reset Focus?", message: "You have finished the focus cycle.", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] _ in
+            timer.invalidate()
+            resetImageViews()
+            time = 1500
+            isTimerStarted = false
+            timerLabel.text = "25:00"
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 }
