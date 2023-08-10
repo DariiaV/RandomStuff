@@ -11,7 +11,7 @@ class PomodoroViewController: UIViewController {
     
     private var timer = Timer()
     private var isTimerStarted = false
-    private var time = 1500
+    private var time = 60
     private var nextFocusBlock: FocusSession = .firstSession
     
     private let titleLabel: UILabel = {
@@ -26,7 +26,7 @@ class PomodoroViewController: UIViewController {
     
     private let timerLabel: UILabel = {
         let label = UILabel()
-        label.text = "25:00"
+        label.text = "1:00"
         label.textColor = .systemPurple
         label.font = .systemFont(ofSize: 100, weight: .bold)
         label.textAlignment = .center
@@ -167,9 +167,10 @@ class PomodoroViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] _ in
             timer.invalidate()
-            time = 1500
+            time = 60
             isTimerStarted = false
-            timerLabel.text = "25:00"
+            timerLabel.text = "1:00"
+            startStopButton.setTitle("Start", for: .normal)
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -183,7 +184,7 @@ class PomodoroViewController: UIViewController {
             isTimerStarted = false
             timer.invalidate()
             updateCompletedSession(for: nextFocusBlock)
-            time = 1500
+            time = 60
         }
     }
     
@@ -201,25 +202,37 @@ class PomodoroViewController: UIViewController {
         
         switch nextTimeBlock {
         case .firstSession:
-            timerLabel.text = "25:00"
+            timerLabel.text = "1:00"
             startStopButton.setTitle("Start", for: .normal)
             circleOneImageView.image = UIImage(systemName: "circle.fill")
             nextFocusBlock = .secondSession
             
+            if time == 0 {
+                startTimeoutSession()
+            }
+            
         case .secondSession:
-            timerLabel.text = "25:00"
+            timerLabel.text = "1:00"
             startStopButton.setTitle("Start", for: .normal)
             circleTwoImageView.image = UIImage(systemName: "circle.fill")
             nextFocusBlock = .thirdSession
             
+            if time == 0 {
+                startTimeoutSession()
+            }
+            
         case .thirdSession:
-            timerLabel.text = "25:00"
+            timerLabel.text = "1:00"
             startStopButton.setTitle("Start", for: .normal)
             circleThreeImageView.image = UIImage(systemName: "circle.fill")
             nextFocusBlock = .fourthSession
             
+            if time == 0 {
+                startTimeoutSession()
+            }
+            
         case .fourthSession:
-            timerLabel.text = "25:00"
+            timerLabel.text = "1:00"
             startStopButton.setTitle("Start", for: .normal)
             circleFourImageView.image = UIImage(systemName: "circle.fill")
             nextFocusBlock = .firstSession
@@ -243,10 +256,16 @@ class PomodoroViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] _ in
             timer.invalidate()
             resetImageViews()
-            time = 1500
+            time = 60
             isTimerStarted = false
-            timerLabel.text = "25:00"
+            timerLabel.text = "1:00"
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func startTimeoutSession() {
+        let timeoutVC = TimeoutSessionViewController()
+        timeoutVC.modalPresentationStyle = .fullScreen
+        present(timeoutVC, animated: true)
     }
 }

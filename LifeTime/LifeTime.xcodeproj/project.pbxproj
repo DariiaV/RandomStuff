@@ -26,6 +26,7 @@
 		D8DE44DB2A793A0D00B75E8F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE44DA2A793A0D00B75E8F /* RegisterViewController.swift */; };
 		D8DE44DE2A793F0F00B75E8F /* RegisterUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE44DD2A793F0F00B75E8F /* RegisterUser.swift */; };
 		D8DE44E02A793F3700B75E8F /* LoginUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE44DF2A793F3700B75E8F /* LoginUser.swift */; };
+		D8E405C02A85327100E97FBF /* TimeoutSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E405BF2A85327100E97FBF /* TimeoutSessionViewController.swift */; };
 		D8F68EAF2A782BC300B78E4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F68EAE2A782BC300B78E4F /* AppDelegate.swift */; };
 		D8F68EB12A782BC300B78E4F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F68EB02A782BC300B78E4F /* SceneDelegate.swift */; };
 		D8F68EB32A782BC300B78E4F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F68EB22A782BC300B78E4F /* LoginViewController.swift */; };
@@ -50,6 +51,7 @@
 		D8DE44DA2A793A0D00B75E8F /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		D8DE44DD2A793F0F00B75E8F /* RegisterUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUser.swift; sourceTree = "<group>"; };
 		D8DE44DF2A793F3700B75E8F /* LoginUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUser.swift; sourceTree = "<group>"; };
+		D8E405BF2A85327100E97FBF /* TimeoutSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutSessionViewController.swift; sourceTree = "<group>"; };
 		D8F68EAB2A782BC300B78E4F /* LifeTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8F68EAE2A782BC300B78E4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8F68EB02A782BC300B78E4F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				D84D752C2A7976670010F39F /* HabitViewController.swift */,
 				D84D752E2A7982E10010F39F /* PomodoroViewController.swift */,
 				D84D75302A7984C00010F39F /* StatisticsViewController.swift */,
+				D8E405BF2A85327100E97FBF /* TimeoutSessionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				D84D75222A795CA10010F39F /* AlertManager.swift in Sources */,
 				D84D752B2A7974A70010F39F /* ProfileViewController.swift in Sources */,
 				D8F68EAF2A782BC300B78E4F /* AppDelegate.swift in Sources */,
+				D8E405C02A85327100E97FBF /* TimeoutSessionViewController.swift in Sources */,
 				D8DE44E02A793F3700B75E8F /* LoginUser.swift in Sources */,
 				D84D75312A7984C00010F39F /* StatisticsViewController.swift in Sources */,
 				D84D752D2A7976670010F39F /* HabitViewController.swift in Sources */,
