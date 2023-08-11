@@ -13,6 +13,7 @@ class PomodoroViewController: UIViewController {
     private var isTimerStarted = false
     private var time = 60
     private var nextFocusBlock: FocusSession = .firstSession
+    private let signalManager = SignalManager()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -165,17 +166,17 @@ class PomodoroViewController: UIViewController {
             //do nothing
         }))
         
-        alert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] _ in
-            timer.invalidate()
-            time = 60
-            isTimerStarted = false
-            timerLabel.text = "1:00"
-            startStopButton.setTitle("Start", for: .normal)
+        alert.addAction(UIAlertAction(title: "YES", style: .default, handler: { _ in
+            self.timer.invalidate()
+            self.time = 60
+            self.isTimerStarted = false
+            self.timerLabel.text = "1:00"
+            self.startStopButton.setTitle("Start", for: .normal)
         }))
         self.present(alert, animated: true, completion: nil)
     }
     
-    @objc func updateTimer() {
+    @objc private func updateTimer() {
         if time > 0 {
             isTimerStarted = true
             time -= 1
@@ -183,6 +184,7 @@ class PomodoroViewController: UIViewController {
         } else if time == 0 {
             isTimerStarted = false
             timer.invalidate()
+            signalManager.playSound()
             updateCompletedSession(for: nextFocusBlock)
             time = 60
         }

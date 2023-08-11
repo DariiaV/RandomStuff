@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum FocusSession: Int, CaseIterable {
+enum FocusSession: Int {
     case firstSession,
          secondSession,
          thirdSession,

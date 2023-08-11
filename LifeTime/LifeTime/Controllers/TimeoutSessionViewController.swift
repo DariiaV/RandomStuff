@@ -12,6 +12,7 @@ class TimeoutSessionViewController: UIViewController {
     private var timer = Timer()
     private var isTimerStarted = false
     private var time = 60
+    private let signalManager = SignalManager()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -124,7 +125,7 @@ class TimeoutSessionViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    @objc func updateTimer() {
+    @objc private func updateTimer() {
         if time > 0 {
             isTimerStarted = true
             time -= 1
@@ -132,7 +133,8 @@ class TimeoutSessionViewController: UIViewController {
         } else if time == 0 {
             isTimerStarted = false
             timer.invalidate()
-            dismiss(animated: true)
+            signalManager.playSound()
+            goToFocus()
         }
     }
     
@@ -144,5 +146,14 @@ class TimeoutSessionViewController: UIViewController {
     
     private func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    private func goToFocus() {
+        let alert = UIAlertController(title: "Go To Focus?", message: "You have finished Timeout.", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "YES", style: .default, handler: { _ in
+            self.dismiss(animated: true)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 }
