@@ -7,11 +7,18 @@
 
 import UIKit
 
+protocol TimeoutSessionViewControllerDelegate: AnyObject {
+    func startTimeout()
+}
+
 class TimeoutSessionViewController: UIViewController {
     
     private var timer = Timer()
     private var isTimerStarted = false
-    private var time = 60
+    private var time: Int = 0
+    
+    weak var delegate: TimeoutSessionViewControllerDelegate?
+    
     private let signalManager = SignalManager()
     
     private let titleLabel: UILabel = {
@@ -24,9 +31,9 @@ class TimeoutSessionViewController: UIViewController {
         return label
     }()
     
-    private let timerLabel: UILabel = {
+    private lazy var timerLabel: UILabel = {
         let label = UILabel()
-        label.text = "1:00"
+        label.text = formatTime()
         label.textColor = .systemPurple
         label.font = .systemFont(ofSize: 100, weight: .bold)
         label.textAlignment = .center
@@ -59,6 +66,16 @@ class TimeoutSessionViewController: UIViewController {
         button.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
         return button
     }()
+    
+    init(time: Int) {
+        self.time = time
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -117,9 +134,9 @@ class TimeoutSessionViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] _ in
             timer.invalidate()
-            time = 60
+            time = time
             isTimerStarted = false
-            timerLabel.text = "1:00"
+            timerLabel.text = String(time)
             startStopButton.setTitle("Start", for: .normal)
         }))
         self.present(alert, animated: true, completion: nil)
