@@ -7,8 +7,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
-    
+final class LoginViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Welcome To LifeTime"

@@ -8,7 +8,7 @@
 import Foundation
 
 extension Int {
-    static let shortBreakTime = 60
-    static let longBreakTime = 120
-    static let workTime = 60
+    static let shortBreakTime = 300
+    static let longBreakTime = 900
+    static let workTime = 1500
 }

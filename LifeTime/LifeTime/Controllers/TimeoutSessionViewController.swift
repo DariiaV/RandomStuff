@@ -8,18 +8,19 @@
 import UIKit
 
 protocol TimeoutSessionViewControllerDelegate: AnyObject {
-    func startTimeout()
+    func finishShortBreak()
+    func finishLongBreak()
 }
 
-class TimeoutSessionViewController: UIViewController {
-    
+final class TimeoutSessionViewController: UIViewController {
     private var timer = Timer()
     private var isTimerStarted = false
-    private var time: Int = 0
+    private var time: Int
     
     weak var delegate: TimeoutSessionViewControllerDelegate?
     
     private let signalManager = SignalManager()
+    private let session: BreakSession
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -67,8 +68,14 @@ class TimeoutSessionViewController: UIViewController {
         return button
     }()
     
-    init(time: Int) {
-        self.time = time
+    init(session: BreakSession) {
+        self.session = session
+        switch session {
+        case .shortBreak:
+            time = .shortBreakTime
+        case .longBreak:
+            time = .longBreakTime
+        }
         super.init(nibName: nil, bundle: nil)
     }
     

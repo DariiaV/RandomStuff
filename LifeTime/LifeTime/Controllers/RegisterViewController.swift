@@ -7,8 +7,7 @@
 
 import UIKit
 
-class RegisterViewController: UIViewController {
-    
+final class RegisterViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Create your account"

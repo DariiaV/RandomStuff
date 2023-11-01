@@ -9,8 +9,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import UIKit
 
-class ProfileViewController: UIViewController {
-    
+final class ProfileViewController: UIViewController {
     private var user: User?
     
     private let profileLabel: UILabel = {

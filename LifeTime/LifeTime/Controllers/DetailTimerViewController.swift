@@ -7,8 +7,7 @@
 
 import UIKit
 
-class DetailTimerViewController: UIViewController {
-    
+final class DetailTimerViewController: UIViewController {
     private lazy var timerLabel: UILabel = {
         let label = UILabel()
         label.text = "00:00"

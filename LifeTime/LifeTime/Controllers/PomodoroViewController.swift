@@ -7,8 +7,12 @@
 
 import UIKit
 
-class PomodoroViewController: UIViewController {
-    
+enum BreakSession {
+    case shortBreak
+    case longBreak
+}
+
+final class PomodoroViewController: UIViewController {
     private var timer = Timer()
     private var isTimerStarted = false
     private var time: Int = .workTime
@@ -201,49 +205,38 @@ class PomodoroViewController: UIViewController {
     }
     
     private func updateCompletedSession(for nextTimeBlock: FocusSession) {
+        timerLabel.text = "01:00"
+        startStopButton.setTitle("Start", for: .normal)
         
         switch nextTimeBlock {
         case .firstSession:
-            timerLabel.text = "01:00"
-            startStopButton.setTitle("Start", for: .normal)
             circleOneImageView.image = UIImage(systemName: "circle.fill")
             nextFocusBlock = .secondSession
-            
             if time == 0 {
-                startShortBreakSession()
+                startBreakSession(session: .shortBreak)
             }
             
         case .secondSession:
-            timerLabel.text = "01:00"
-            startStopButton.setTitle("Start", for: .normal)
             circleTwoImageView.image = UIImage(systemName: "circle.fill")
             nextFocusBlock = .thirdSession
-            
             if time == 0 {
-                startShortBreakSession()
+                startBreakSession(session: .shortBreak)
             }
             
         case .thirdSession:
-            timerLabel.text = "01:00"
-            startStopButton.setTitle("Start", for: .normal)
             circleThreeImageView.image = UIImage(systemName: "circle.fill")
             nextFocusBlock = .fourthSession
-            
             if time == 0 {
-                startShortBreakSession()
+                startBreakSession(session: .shortBreak)
             }
             
         case .fourthSession:
-            timerLabel.text = "01:00"
-            startStopButton.setTitle("Start", for: .normal)
             circleFourImageView.image = UIImage(systemName: "circle.fill")
             nextFocusBlock = .firstSession
-            
             if time == 0 {
-                startLongBreakSession()
-                //???
-                startNewCycleFocus()
+                startBreakSession(session: .longBreak)
             }
+            finishLongBreak()
         }
     }
     
@@ -267,17 +260,16 @@ class PomodoroViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func startShortBreakSession() {
-        time = .shortBreakTime
-        let timeoutVC = TimeoutSessionViewController(time: time)
-        timeoutVC.delegate = self
-        timeoutVC.modalPresentationStyle = .fullScreen
-        present(timeoutVC, animated: true)
-    }
-    
-    private func startLongBreakSession() {
-        time = .longBreakTime
-        let timeoutVC = TimeoutSessionViewController(time: time)
+    //    private func startShortBreakSession() {
+    //        time = .shortBreakTime
+    //        let timeoutVC = TimeoutSessionViewController(time: time)
+    //        timeoutVC.delegate = self
+    //        timeoutVC.modalPresentationStyle = .fullScreen
+    //        present(timeoutVC, animated: true)
+    //    }
+    //
+    private func startBreakSession(session: BreakSession) {
+        let timeoutVC = TimeoutSessionViewController(session: session)
         timeoutVC.delegate = self
         timeoutVC.modalPresentationStyle = .fullScreen
         present(timeoutVC, animated: true)
@@ -285,7 +277,17 @@ class PomodoroViewController: UIViewController {
 }
 
 extension PomodoroViewController: TimeoutSessionViewControllerDelegate {
-    func startTimeout() {
-        
+    func finishShortBreak() {
+        timer.invalidate()
+        time = .workTime
+        timerLabel.text = formatTime()
+    }
+    
+    func finishLongBreak() {
+        timer.invalidate()
+        resetImageViews()
+        time = .workTime
+        isTimerStarted = false
+        timerLabel.text = formatTime()
     }
 }

@@ -7,8 +7,7 @@
 
 import UIKit
 
-class HabitViewController: UIViewController {
-    
+final class HabitViewController: UIViewController {
     private let tableView = UITableView()
     private let cellReuseIdentifier = "cell"
     private var habit: [TimerModel] = []
